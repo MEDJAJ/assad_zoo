@@ -99,17 +99,6 @@
                             </div>
 
                           
-                            <div class="mb-6">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">
-                                    Instructions spéciales (optionnel)
-                                </label>
-                                <textarea 
-                                    name="instructions" 
-                                    rows="3"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                                    placeholder="Avez-vous des demandes particulières ?"
-                                ></textarea>
-                            </div>
 
                        
                             <div class="mt-8">

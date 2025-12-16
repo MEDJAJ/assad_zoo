@@ -110,26 +110,7 @@
                     </div>
 
                  
-                    <div class="mb-8">
-                        <label class="block text-sm font-medium text-gray-700 mb-4">
-                            Recommanderiez-vous cette visite ?
-                        </label>
-                        <div class="flex space-x-6">
-                            <label class="flex items-center">
-                                <input type="radio" name="recommandation" value="oui" class="mr-2">
-                                <span>Oui</span>
-                            </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="recommandation" value="non" class="mr-2">
-                                <span>Non</span>
-                            </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="recommandation" value="peut_etre" class="mr-2">
-                                <span>Peut-être</span>
-                            </label>
-                        </div>
-                    </div>
-
+               
                   
                     <div class="text-center">
                         <button type="submit" class="bg-blue-600 text-white py-3 px-8 rounded-lg font-semibold hover:bg-blue-700 text-lg">
