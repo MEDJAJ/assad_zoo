@@ -71,8 +71,8 @@
                     
                     <div class="bg-white rounded-xl shadow-lg p-6">
                         <h2 class="text-2xl font-bold mb-6">Informations de réservation</h2>
-                        
-                        <form method="POST" action="process_reservation.php">
+                        <!-- process_reservation.php  -->
+                       <form method="POST" action="">
                             
                             <div class="mb-6">
                                 <label class="block text-sm font-medium text-gray-700 mb-3">
@@ -148,17 +148,7 @@
                         </div>
 
                  
-                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                            <h3 class="font-semibold text-yellow-800 mb-2">
-                                <i class="fas fa-info-circle mr-2"></i>Informations importantes
-                            </h3>
-                            <ul class="text-sm text-yellow-700 space-y-2">
-                                <li> Annulation gratuite jusqu'à 24h avant</li>
-                                <li> Lien de connexion envoyé par email</li>
-                                <li> Connexion requise 10 minutes avant</li>
-                                <li> Paiement sécurisé</li>
-                            </ul>
-                        </div>
+                     
                     </div>
                 </div>
             </div>
