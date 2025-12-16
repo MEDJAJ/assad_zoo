@@ -13,7 +13,7 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Navigation -->
+   
     <nav class="bg-white shadow-lg">
         <div class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
@@ -31,7 +31,7 @@
         </div>
     </nav>
 
-    <!-- Bannière spéciale Lion de l'Atlas -->
+  
     <header class="lion-gradient text-white py-8">
         <div class="container mx-auto px-4 text-center">
             <h1 class="text-5xl font-bold mb-4">🦁 Asaad - Le Lion de l'Atlas</h1>
@@ -39,10 +39,10 @@
         </div>
     </header>
 
-    <!-- Contenu principal -->
+
     <main class="container mx-auto px-4 py-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Galerie d'images -->
+       
             <div>
                 <div class="mb-4">
                     <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=800" 
@@ -58,7 +58,7 @@
                 </div>
             </div>
 
-            <!-- Informations -->
+      
             <div>
                 <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
                     <h2 class="text-2xl font-bold mb-4">Informations générales</h2>
@@ -94,7 +94,7 @@
                     </div>
                 </div>
 
-                <!-- Statut de conservation -->
+                
                 <div class="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
                     <h2 class="text-2xl font-bold mb-4 text-red-700">Statut de conservation</h2>
                     <div class="flex items-center mb-3">
@@ -109,7 +109,7 @@
                     </p>
                 </div>
 
-                <!-- Description -->
+          
                 <div class="bg-white rounded-lg shadow-lg p-6">
                     <h2 class="text-2xl font-bold mb-4">Description</h2>
                     <p class="text-gray-700 mb-4">
@@ -125,7 +125,7 @@
         </div>
     </main>
 
-    <!-- Footer -->
+ 
     <footer class="bg-gray-800 text-white py-8">
         <div class="container mx-auto px-4 text-center">
             <p>&copy; 2024 Zoo Virtuel ASSAD - Projet CAN 2025 Maroc</p>

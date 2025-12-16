@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gray-50">
-    <!-- Navigation -->
+
     <nav class="bg-white shadow-lg ">
         <div class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
@@ -26,14 +26,14 @@
         </div>
     </nav>
 
-    <!-- En-tête avec filtres -->
+   
     <header class="bg-white py-8">
         <div class="container mx-auto px-4">
             <h1 class="text-4xl font-bold mb-6">Tous les animaux</h1>
             
-            <!-- Filtres -->
+          
             <div class="flex flex-col md:flex-row gap-4 mb-8">
-                <!-- Filtre Habitat -->
+               
                 <div class="flex-1">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Habitat</label>
                     <select class="w-full px-4 py-2 border border-gray-300 rounded-lg">
@@ -57,7 +57,7 @@
                     </select>
                 </div>
                 
-                <!-- Bouton Filtrer -->
+                
                 <div class="flex items-end">
                     <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 h-[42px]">
                     Filtrer
@@ -67,11 +67,11 @@
         </div>
     </header>
 
-    <!-- Grille d'animaux -->
+
     <main class="container mx-auto px-4 py-8">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             
-            <!-- Animal 1 -->
+           
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=400" 
                      alt="Lion" class="w-full h-48 object-cover">
@@ -91,7 +91,7 @@
                 </div>
             </div>
 
-            <!-- Animal 2 -->
+        
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=400" 
                      alt="Éléphant" class="w-full h-48 object-cover">
@@ -111,7 +111,7 @@
                 </div>
             </div>
 
-            <!-- Animal 3 -->
+         
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1559253664-ca249d4608c6?auto=format&fit=crop&w=400" 
                      alt="Girafe" class="w-full h-48 object-cover">
@@ -131,7 +131,7 @@
                 </div>
             </div>
 
-            <!-- Animal 4 -->
+        
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1567177662142-20646e1b6c69?auto=format&fit=crop&w=400" 
                      alt="Zèbre" class="w-full h-48 object-cover">
@@ -151,7 +151,7 @@
                 </div>
             </div>
 
-            <!-- Animal 5 -->
+          
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?auto=format&fit=crop&w=400" 
                      alt="Rhinocéros" class="w-full h-48 object-cover">
@@ -171,7 +171,7 @@
                 </div>
             </div>
 
-            <!-- Animal 6 -->
+           
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1519066629447-267fffa62d4b?auto=format&fit=crop&w=400" 
                      alt="Hippopotame" class="w-full h-48 object-cover">
@@ -191,7 +191,7 @@
                 </div>
             </div>
 
-            <!-- Animal 7 -->
+           
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1551085254-e96b210db58a?auto=format&fit=crop&w=400" 
                      alt="Guépard" class="w-full h-48 object-cover">
@@ -211,7 +211,7 @@
                 </div>
             </div>
 
-            <!-- Animal 8 -->
+            
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1550358864-518f202c02ba?auto=format&fit=crop&w=400" 
                      alt="Crocodile" class="w-full h-48 object-cover">
@@ -233,7 +233,7 @@
         </div>
     </main>
 
-    <!-- Footer -->
+    
     <footer class="bg-gray-800 text-white py-8 mt-12">
         <div class="container mx-auto px-4 text-center">
             <p>&copy; 2024 Zoo Virtuel ASSAD</p>

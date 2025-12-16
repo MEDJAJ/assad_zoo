@@ -19,7 +19,7 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Navigation -->
+   
     <nav class="bg-white shadow-lg">
         <div class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
@@ -37,14 +37,14 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    
     <header class="hero-gradient text-white">
         <div class="container mx-auto px-4 py-16">
             <div class="text-center">
                 <h1 class="text-5xl font-bold mb-4">Découvrez le Zoo Virtuel ASSAD</h1>
                 <p class="text-xl mb-8">Explorez la faune africaine et les lions de l'Atlas</p>
                 
-                <!-- Barre de recherche -->
+       
                 <div class="max-w-2xl mx-auto">
                     <div class="relative">
                         <input 
@@ -61,13 +61,13 @@
         </div>
     </header>
 
-    <!-- Section Animaux en vedette -->
+  
     <section class="py-12">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold mb-8 text-center">Animaux en vedette</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Animal 1 -->
+               
                 <div class="animal-card bg-white rounded-xl shadow-md overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=500" 
                          alt="Lion" class="w-full h-48 object-cover">
@@ -81,7 +81,7 @@
                     </div>
                 </div>
 
-                <!-- Animal 2 -->
+               
                 <div class="animal-card bg-white rounded-xl shadow-md overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=500" 
                          alt="Éléphant" class="w-full h-48 object-cover">
@@ -95,7 +95,6 @@
                     </div>
                 </div>
 
-                <!-- Animal 3 -->
                 <div class="animal-card bg-white rounded-xl shadow-md overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1559253664-ca249d4608c6?auto=format&fit=crop&w=500" 
                          alt="Girafe" class="w-full h-48 object-cover">
@@ -109,7 +108,7 @@
                     </div>
                 </div>
 
-                <!-- Animal 4 -->
+            
                 <div class="animal-card bg-white rounded-xl shadow-md overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1567177662142-20646e1b6c69?auto=format&fit=crop&w=500" 
                          alt="Zèbre" class="w-full h-48 object-cover">
@@ -132,13 +131,13 @@
         </div>
     </section>
 
-    <!-- Section Visites disponibles -->
+ 
     <section class="py-12 bg-gray-100">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold mb-8 text-center">Visites guidées disponibles</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Visite 1 -->
+        
                 <div class="bg-white rounded-xl shadow-md p-6">
                     <h3 class="font-bold text-xl mb-3">Safari virtuel matinal</h3>
                     <div class="space-y-2 mb-4">
@@ -153,7 +152,7 @@
                     </a>
                 </div>
 
-                <!-- Visite 2 -->
+               
                 <div class="bg-white rounded-xl shadow-md p-6">
                     <h3 class="font-bold text-xl mb-3">Découverte des félins</h3>
                     <div class="space-y-2 mb-4">
@@ -168,7 +167,7 @@
                     </a>
                 </div>
 
-                <!-- Visite 3 -->
+            
                 <div class="bg-white rounded-xl shadow-md p-6">
                     <h3 class="font-bold text-xl mb-3">Aventure nocturne</h3>
                     <div class="space-y-2 mb-4">
@@ -192,7 +191,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    
     <footer class="bg-gray-800 text-white py-8">
         <div class="container mx-auto px-4">
             <div class="text-center">
