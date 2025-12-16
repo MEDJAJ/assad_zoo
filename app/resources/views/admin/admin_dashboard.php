@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gray-100">
-    <!-- Sidebar -->
+   
     <div class="flex">
         <div class="w-64 bg-gray-900 text-white min-h-screen">
             <div class="p-6">
@@ -17,23 +17,23 @@
                     <span class="text-xl font-bold">ASSAD Admin</span>
                 </div>
                 <nav class="space-y-2">
-                    <a href="admin_dashboard.html" class="flex items-center space-x-3 p-3 bg-blue-700 rounded-lg">
+                    <a href="admin_dashboard.php" class="flex items-center space-x-3 p-3 bg-blue-700 rounded-lg">
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
-                    <a href="users_admin.html" class="flex items-center space-x-3 p-3 hover:bg-gray-800 rounded-lg">
+                    <a href="users_admin.php" class="flex items-center space-x-3 p-3 hover:bg-gray-800 rounded-lg">
                         <i class="fas fa-users"></i>
                         <span>Utilisateurs</span>
                     </a>
-                    <a href="animals_admin.html" class="flex items-center space-x-3 p-3 hover:bg-gray-800 rounded-lg">
+                    <a href="animals_admin.php" class="flex items-center space-x-3 p-3 hover:bg-gray-800 rounded-lg">
                         <i class="fas fa-paw"></i>
                         <span>Animaux</span>
                     </a>
-                    <a href="habitats_admin.html" class="flex items-center space-x-3 p-3 hover:bg-gray-800 rounded-lg">
+                    <a href="habitats_admin.admin" class="flex items-center space-x-3 p-3 hover:bg-gray-800 rounded-lg">
                         <i class="fas fa-tree"></i>
                         <span>Habitats</span>
                     </a>
-                    <a href="stats.html" class="flex items-center space-x-3 p-3 hover:bg-gray-800 rounded-lg">
+                    <a href="stats.admin" class="flex items-center space-x-3 p-3 hover:bg-gray-800 rounded-lg">
                         <i class="fas fa-chart-bar"></i>
                         <span>Statistiques</span>
                     </a>
