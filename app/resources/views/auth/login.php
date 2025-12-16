@@ -6,7 +6,7 @@
     <title>Connexion - Zoo ASSAD</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+    <!-- <style>
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
@@ -24,7 +24,7 @@
             50% { transform: translateY(-20px); }
             100% { transform: translateY(0px); }
         }
-    </style>
+    </style> -->
 </head>
 <body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
     <div class="fixed inset-0 gradient-bg z-0"></div>
