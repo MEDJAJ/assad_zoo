@@ -28,10 +28,10 @@
                     <span class="text-xl font-bold text-gray-800">Zoo ASSAD</span>
                 </div>
                 <div class="flex space-x-6">
-                    <a href="home.html" class="text-blue-600 font-semibold">Accueil</a>
-                    <a href="animals.html" class="text-gray-600 hover:text-blue-600">Animaux</a>
-                    <a href="visites.html" class="text-gray-600 hover:text-blue-600">Visites</a>
-                    <a href="login.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Connexion</a>
+                    <a href="home.php" class="text-blue-600 font-semibold">Accueil</a>
+                    <a href="animals.php" class="text-gray-600 hover:text-blue-600">Animaux</a>
+                    <a href="visites.php" class="text-gray-600 hover:text-blue-600">Visites</a>
+                    <a href="login.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Connexion</a>
                 </div>
             </div>
         </div>
