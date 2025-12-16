@@ -14,13 +14,13 @@
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-2">
                     <span class="text-3xl">🦁</span>
-                    <a href="home.html" class="text-xl font-bold text-gray-800">Zoo ASSAD</a>
+                    <a href="home.php" class="text-xl font-bold text-gray-800">Zoo ASSAD</a>
                 </div>
                 <div class="flex space-x-6">
-                    <a href="home.html" class="text-gray-600 hover:text-blue-600">Accueil</a>
-                    <a href="animals.html" class="text-blue-600 font-semibold">Animaux</a>
-                    <a href="visites.html" class="text-gray-600 hover:text-blue-600">Visites</a>
-                    <a href="login.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Connexion</a>
+                    <a href="home.php" class="text-gray-600 hover:text-blue-600">Accueil</a>
+                    <a href="animals.php" class="text-blue-600 font-semibold">Animaux</a>
+                    <a href="visites.php" class="text-gray-600 hover:text-blue-600">Visites</a>
+                    <a href="login.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Connexion</a>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
                     </select>
                 </div>
                 
-                <!-- Filtre Pays -->
+         
                 <div class="flex-1">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Pays d'origine</label>
                     <select class="w-full px-4 py-2 border border-gray-300 rounded-lg">
@@ -60,7 +60,7 @@
                 <!-- Bouton Filtrer -->
                 <div class="flex items-end">
                     <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 h-[42px]">
-                        <i class="fas fa-filter mr-2"></i>Filtrer
+                    Filtrer
                     </button>
                 </div>
             </div>
@@ -85,7 +85,7 @@
                         <i class="fas fa-globe-africa mr-2"></i>
                         <span>Maroc</span>
                     </div>
-                    <a href="animal_details.html?id=1" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
                         Voir détails
                     </a>
                 </div>
@@ -105,7 +105,7 @@
                         <i class="fas fa-globe-africa mr-2"></i>
                         <span>Kenya</span>
                     </div>
-                    <a href="animal_details.html?id=2" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
                         Voir détails
                     </a>
                 </div>
@@ -125,7 +125,7 @@
                         <i class="fas fa-globe-africa mr-2"></i>
                         <span>Tanzanie</span>
                     </div>
-                    <a href="animal_details.html?id=3" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
                         Voir détails
                     </a>
                 </div>
@@ -145,7 +145,7 @@
                         <i class="fas fa-globe-africa mr-2"></i>
                         <span>Afrique du Sud</span>
                     </div>
-                    <a href="animal_details.html?id=4" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
                         Voir détails
                     </a>
                 </div>
@@ -165,7 +165,7 @@
                         <i class="fas fa-globe-africa mr-2"></i>
                         <span>Namibie</span>
                     </div>
-                    <a href="animal_details.html?id=5" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
                         Voir détails
                     </a>
                 </div>
@@ -185,7 +185,7 @@
                         <i class="fas fa-globe-africa mr-2"></i>
                         <span>Zambie</span>
                     </div>
-                    <a href="animal_details.html?id=6" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
                         Voir détails
                     </a>
                 </div>
@@ -205,7 +205,7 @@
                         <i class="fas fa-globe-africa mr-2"></i>
                         <span>Botswana</span>
                     </div>
-                    <a href="animal_details.html?id=7" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
                         Voir détails
                     </a>
                 </div>
@@ -225,7 +225,7 @@
                         <i class="fas fa-globe-africa mr-2"></i>
                         <span>Égypte</span>
                     </div>
-                    <a href="animal_details.html?id=8" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
                         Voir détails
                     </a>
                 </div>
