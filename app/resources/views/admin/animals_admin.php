@@ -9,7 +9,7 @@
 </head>
 <body class="bg-gray-100">
     <div class="flex">
-        <!-- Sidebar -->
+ 
         <div class="w-64 bg-gray-900 text-white min-h-screen">
             <div class="p-6">
                 <div class="flex items-center space-x-3 mb-8">
@@ -41,9 +41,9 @@
             </div>
         </div>
 
-        <!-- Main Content -->
+   
         <div class="flex-1 p-8">
-            <!-- Header -->
+         
             <div class="flex justify-between items-center mb-8">
                 <h1 class="text-3xl font-bold">Gestion des Animaux</h1>
                 <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
@@ -51,7 +51,7 @@
                 </button>
             </div>
 
-            <!-- Formulaire d'ajout -->
+    
             <div class="bg-white rounded-xl shadow p-6 mb-6 hidden" id="addForm">
                 <h2 class="text-xl font-bold mb-4">Ajouter un animal</h2>
                 <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -83,9 +83,9 @@
                 </form>
             </div>
 
-            <!-- Liste des animaux -->
+    
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Animal 1 -->
+            
                 <div class="bg-white rounded-xl shadow overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=400" 
                          class="w-full h-48 object-cover">
@@ -104,7 +104,7 @@
                     </div>
                 </div>
 
-                <!-- Animal 2 -->
+           
                 <div class="bg-white rounded-xl shadow overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=400" 
                          class="w-full h-48 object-cover">
@@ -123,7 +123,7 @@
                     </div>
                 </div>
 
-                <!-- Animal 3 -->
+           
                 <div class="bg-white rounded-xl shadow overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1559253664-ca249d4608c6?auto=format&fit=crop&w=400" 
                          class="w-full h-48 object-cover">

@@ -42,15 +42,15 @@
             </div>
         </div>
 
-        <!-- Main Content -->
+      
         <div class="flex-1 p-8">
-            <!-- Header -->
+          
             <div class="mb-8">
                 <h1 class="text-3xl font-bold mb-2">Statistiques</h1>
                 <p class="text-gray-600">Analyse des données du zoo virtuel</p>
             </div>
 
-            <!-- Stats Cards -->
+         
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <div class="bg-white rounded-xl shadow p-6">
                     <div class="flex items-center justify-between">
@@ -93,9 +93,9 @@
                 </div>
             </div>
 
-            <!-- Graphs -->
+        
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                <!-- Chart 1 -->
+            
                 <div class="bg-white rounded-xl shadow p-6">
                     <h2 class="text-xl font-bold mb-6">Utilisateurs par rôle</h2>
                     <div class="h-64">
@@ -103,7 +103,6 @@
                     </div>
                 </div>
 
-                <!-- Chart 2 -->
                 <div class="bg-white rounded-xl shadow p-6">
                     <h2 class="text-xl font-bold mb-6">Réservations par mois</h2>
                     <div class="h-64">
@@ -112,7 +111,7 @@
                 </div>
             </div>
 
-            <!-- Table Top Visites -->
+           
             <div class="bg-white rounded-xl shadow p-6">
                 <h2 class="text-xl font-bold mb-6">Top 5 des visites les plus réservées</h2>
                 <div class="overflow-x-auto">

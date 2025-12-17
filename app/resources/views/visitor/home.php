@@ -25,7 +25,7 @@
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-2">
                     <span class="text-3xl">🦁</span>
-                    <span class="text-xl font-bold text-gray-800">Zoo ASSAD</span>
+                    <a href="fiche_speciale.php" class="text-xl font-bold text-gray-800">Zoo ASSAD</a>
                 </div>
                 <div class="flex space-x-6">
                     <a href="home.php" class="text-blue-600 font-semibold">Accueil</a>

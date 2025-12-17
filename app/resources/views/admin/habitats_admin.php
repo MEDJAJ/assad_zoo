@@ -9,7 +9,7 @@
 </head>
 <body class="bg-gray-100">
     <div class="flex">
-        <!-- Sidebar -->
+   
         <div class="w-64 bg-gray-900 text-white min-h-screen">
             <div class="p-6">
                 <div class="flex items-center space-x-3 mb-8">
@@ -41,15 +41,15 @@
             </div>
         </div>
 
-        <!-- Main Content -->
+      
         <div class="flex-1 p-8">
-            <!-- Header -->
+       
             <div class="flex justify-between items-center mb-8">
                 <h1 class="text-3xl font-bold">Gestion des Habitats</h1>
 
             </div>
 
-            <!-- Formulaire d'ajout -->
+      
             <div class="bg-white rounded-xl shadow p-6 mb-6">
                 <h2 class="text-xl font-bold mb-4">Ajouter un habitat</h2>
                 <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -68,9 +68,9 @@
                 </form>
             </div>
 
-            <!-- Liste des habitats -->
+      
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Habitat 1 -->
+             
                 <div class="bg-white rounded-xl shadow p-6">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-bold">Savane Africaine</h3>
@@ -90,7 +90,7 @@
                     </div>
                 </div>
 
-                <!-- Habitat 2 -->
+          
                 <div class="bg-white rounded-xl shadow p-6">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-bold">Forêt Tropicale</h3>
@@ -110,7 +110,7 @@
                     </div>
                 </div>
 
-                <!-- Habitat 3 -->
+           
                 <div class="bg-white rounded-xl shadow p-6">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-bold">Désert</h3>

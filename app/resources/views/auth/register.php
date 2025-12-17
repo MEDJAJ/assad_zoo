@@ -22,7 +22,7 @@
     <div class="fixed inset-0 gradient-bg z-0"></div>
     
     <div class="relative z-10 w-full max-w-4xl flex">
-        <!-- Illustration côté gauche -->
+       
         <div class="hidden md:flex md:w-1/2 bg-white rounded-l-2xl p-8 flex-col justify-center items-center">
             <div class="mb-8">
                 <h1 class="text-5xl mb-2">🦁</h1>
@@ -70,17 +70,17 @@
             </div>
         </div>
         
-        <!-- Formulaire d'inscription côté droit -->
+  
         <div class="w-full md:w-1/2 bg-white card-shadow rounded-2xl md:rounded-r-2xl md:rounded-l-none p-8">
-            <!-- En-tête -->
+          
             <div class="text-center mb-8">
                 <h1 class="text-3xl font-bold text-gray-800">Créer un compte</h1>
                 <p class="text-gray-600 mt-2">Rejoignez le zoo virtuel ASSAD</p>
             </div>
             
-            <!-- Formulaire -->
+          
             <form method="POST" action="process_register.php" class="space-y-6">
-                <!-- Nom complet -->
+             
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         <i class="fas fa-user mr-2"></i>Nom complet *
@@ -102,7 +102,7 @@
                     <p class="text-xs text-gray-500 mt-1">Ex: Ahmed Benali</p>
                 </div>
                 
-                <!-- Email -->
+        
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         <i class="fas fa-envelope mr-2"></i>Adresse email *
@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 
-                <!-- Mot de passe -->
+          
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         <i class="fas fa-lock mr-2"></i>Mot de passe *
@@ -145,7 +145,7 @@
                     </p>
                 </div>
                 
-                <!-- Confirmation mot de passe -->
+               
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         <i class="fas fa-lock mr-2"></i>Confirmer le mot de passe *
@@ -164,7 +164,7 @@
                     </div>
                 </div>
                 
-                <!-- Sélection du rôle - VERSION SIMPLE AVEC SELECT -->
+             
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         <i class="fas fa-user-tag mr-2"></i>Choisissez votre rôle *
@@ -188,7 +188,7 @@
                         </div>
                     </div>
                     
-                    <!-- Description des rôles -->
+                  
                     <div class="mt-3 space-y-2 text-sm text-gray-600">
                         <div class="flex items-start">
                             <i class="fas fa-info-circle text-blue-500 mt-0.5 mr-2"></i>
@@ -201,7 +201,7 @@
                     </div>
                 </div>
                 
-                <!-- Conditions d'utilisation -->
+      
                 <div class="flex items-start">
                     <div class="flex items-center h-5">
                         <input 
@@ -222,13 +222,13 @@
                     </div>
                 </div>
                 
-                <!-- Bouton d'inscription -->
+             
                 <button type="submit" class="w-full gradient-bg text-white py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition duration-300 flex items-center justify-center">
                     <i class="fas fa-user-plus mr-2"></i>
                     Créer mon compte
                 </button>
                 
-                <!-- Lien vers connexion (mobile seulement) -->
+              
                 <div class="text-center mt-6 md:hidden">
                     <p class="text-gray-600">Déjà un compte ?</p>
                     <a href="login.php" class="text-blue-600 hover:text-blue-800 font-medium">
