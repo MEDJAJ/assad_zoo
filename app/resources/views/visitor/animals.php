@@ -20,7 +20,7 @@
                     <a href="home.php" class="text-gray-600 hover:text-blue-600">Accueil</a>
                     <a href="animals.php" class="text-blue-600 font-semibold">Animaux</a>
                     <a href="visites.php" class="text-gray-600 hover:text-blue-600">Visites</a>
-                    <a href="login.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Connexion</a>
+                    <a href="../auth/login.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Connexion</a>
                 </div>
             </div>
         </div>

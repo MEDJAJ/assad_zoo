@@ -1,3 +1,68 @@
+<?php
+session_start();
+if (file_exists('../../../includes/config.php')) {
+    include '../../../includes/config.php';
+} else {
+    echo 'Fichier config.php introuvable';
+}
+
+include '../../../includes/functions.php';
+
+$message = "";
+$etat = "";
+$correct="";
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = trim($_POST["email"]);
+    $password = trim($_POST["password"]);
+
+    if (!validation($email, "/^[^\s@]+@[^\s@]+\.[^\s@]+$/") || 
+        !validation($password, "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/")) {
+        $etat = "error";
+        $message = "Email et mot de passe obligatoires et valides";
+    } else {
+        
+        $email = mysqli_real_escape_string($con, $email);
+
+        $sql = "SELECT * FROM Utilisateur WHERE email='$email'";
+        $result = mysqli_query($con, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            $user = mysqli_fetch_assoc($result);
+
+            if (password_verify($password, $user['mot_passe'])) {
+                 $correct = $user['role'];
+                $etat = "success";
+                $message = "Connexion réussie, rôle: $correct";
+                $_SESSION["user_connecte"]=$user['id_utilisateure'];
+                $_SESSION["name_user_connecte"]=$user['nom'];
+               if($correct==="visitor"){
+                header("Location: ../visitor/home.php");
+              exit;
+               }elseif($correct==="guide"){
+                $etat = "success";
+                 header("Location: ../guide/create_visite.php");
+                 exit;
+                $message = "attentu otorisation de compte .....  ";
+               }else{
+                  header("Location: ../admin/admin_dashboard.php");
+                      exit;
+               }
+            } else {
+                $etat = "error";
+                $message = "Mot de passe incorrect";
+            }
+        } else {
+            $etat = "error";
+            $message = "Email introuvable";
+        }
+    }
+}
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -98,8 +163,22 @@
                 </div>
                 
                 
-                <form id="loginForm" method="POST" action="process_login.php" class="space-y-6">
-                
+                <form id="loginForm" method="POST" action="" class="space-y-6">
+                   <?php
+           if($etat==="error"){
+
+echo   "<div class='text-center mt-4 mb-4 text-red-500 border border-black  pb-2 bg-red-100'>";
+       echo "<p class='text-red-600 mt-2 font-bold'>$message</p>";
+   echo "</div>";
+           }elseif($etat==="success"){
+        
+echo   "<div class='text-center mt-4 mb-4 text-red-500 border border-black  pb-2 bg-green-100'>";
+     echo "<p class='text-green-600 mt-2 font-bold'>$message</p>";
+   echo "</div>";
+           }
+            
+          
+            ?>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             <i class="fas fa-envelope mr-2"></i>Adresse email
@@ -125,7 +204,7 @@
                             <label class="block text-sm font-medium text-gray-700">
                                 <i class="fas fa-lock mr-2"></i>Mot de passe
                             </label>
-                            <a href="forgot_password.php" class="text-sm text-purple-600 hover:text-purple-800 font-medium">
+                            <a href="#" class="text-sm text-purple-600 hover:text-purple-800 font-medium">
                                 Mot de passe oublié ?
                             </a>
                         </div>

@@ -1,3 +1,27 @@
+<?php
+
+if (file_exists('../../../includes/config.php')) {
+    include '../../../includes/config.php';
+} else {
+    echo 'Fichier config.php introuvable';
+    exit;
+}
+
+if(!isset($_GET['id'])){
+    die("cette id not existe");
+}
+$id_visite=intval($_GET['id']);
+
+$guide_visites="SELECT * FROM Utilisateur u INNER JOIN visite_guidee v ON v.id_guide=u.id_utilisateure AND v.id_visiteguide='$id_visite'";
+$result=mysqli_query($con,$guide_visites);
+$row = mysqli_fetch_assoc($result);
+print_r($row);
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -71,7 +95,7 @@
                     
                     <div class="bg-white rounded-xl shadow-lg p-6">
                         <h2 class="text-2xl font-bold mb-6">Informations de réservation</h2>
-                        <!-- process_reservation.php  -->
+                        
                        <form method="POST" action="">
                             
                             <div class="mb-6">
@@ -142,6 +166,39 @@
                 </div>
             </div>
         </div>
+
+
+        
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6 text-center text-blue-500">Étapes de la visite guidée</h1>
+<?php 
+$etapes="SELECT * FROM etapevisite WHERE id_visite=$id_visite";
+$result_etapes=mysqli_query($con,$etapes);
+if(mysqli_num_rows($result_etapes)>0){
+
+
+?>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+       <?php while($row=mysqli_fetch_assoc($result_etapes)){
+
+       ?>
+        <div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-2xl transition-shadow duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold text-gray-800"><?= $row['titre_etape']?></h2>titre_etape
+               
+            </div>
+            <p class="text-gray-600">
+                <?= $row['description_etape']?>
+            </p>
+             <span class="bg-blue-100 text-blue-800 text-sm font-semibold px-2 py-1 rounded-full">
+                    Ordre <?= $row['ordre_etape']?>
+                </span>
+        </div>
+<?php }  ?>
+</div>
+<?php }  ?>
+</div>
     </main>
 
 

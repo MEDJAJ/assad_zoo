@@ -1,3 +1,20 @@
+<?php
+session_start();
+if (file_exists('../../../includes/config.php')) {
+    include '../../../includes/config.php';
+} else {
+    echo 'Fichier config.php introuvable';
+    exit;
+}
+include '../../../includes/functions.php';
+$id= $_SESSION["user_connecte"];
+$sql="SELECT * FROM visite_guidee WHERE id_guide=$id ";
+
+$result=mysqli_query($con,$sql);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,7 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gray-50">
-    <!-- Navigation -->
+
     <nav class="bg-white shadow-lg">
         <div class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
@@ -29,15 +46,15 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
+   
     <main class="container mx-auto px-4 py-8">
-        <!-- Header -->
+       
         <div class="mb-8">
             <h1 class="text-3xl font-bold mb-2">Tableau de bord - Guide</h1>
             <p class="text-gray-600">Gérez vos visites et réservations</p>
         </div>
 
-        <!-- Stats -->
+    
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="bg-white rounded-xl shadow p-6">
                 <div class="flex items-center justify-between">
@@ -76,7 +93,7 @@
             </div>
         </div>
 
-        <!-- Actions rapides -->
+     
         <div class="bg-white rounded-xl shadow p-6 mb-8">
             <h2 class="text-xl font-bold mb-4">Actions rapides</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -95,11 +112,11 @@
             </div>
         </div>
 
-        <!-- Mes visites -->
+
         <div class="bg-white rounded-xl shadow p-6 mb-8">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold">Mes visites à venir</h2>
-                <a href="#" class="text-blue-600 hover:text-blue-800">Voir toutes</a>
+              
             </div>
             
             <div class="overflow-x-auto">
@@ -109,64 +126,56 @@
                             <th class="p-4 text-left">Titre</th>
                             <th class="p-4 text-left">Date</th>
                             <th class="p-4 text-left">Capacité</th>
-                            <th class="p-4 text-left">Réservations</th>
+                              <th class="p-4 text-left">Longue</th>
                             <th class="p-4 text-left">Statut</th>
                             <th class="p-4 text-left">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <?php
+                        if(mysqli_num_rows($result)>0){
+
+                       while($row=mysqli_fetch_assoc($result)){
+
+            
+                        ?>
                         <tr class="border-t hover:bg-gray-50">
-                            <td class="p-4">Safari matinal</td>
-                            <td class="p-4">15 Mars - 10:00</td>
-                            <td class="p-4">25 personnes</td>
-                            <td class="p-4">
-                                <span class="font-semibold">12/25</span>
-                            </td>
+                            <td class="p-4"><?= $row["titre"] ?></td>
+                            <td class="p-4"><?= $row["date_heure"] ?></td>
+                            <td class="p-4"><?= $row["capaciter_max"] ?></td>
+                      <td class="p-4"><?= $row["langue"] ?></td>
                             <td class="p-4">
                                 <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
-                                    Confirmée
+                                    <?= $row["status_visiteguide"] ?>
                                 </span>
                             </td>
                             <td class="p-4">
-                                <a href="etapes_visite.html" class="text-blue-600 hover:text-blue-800 mr-3">
+                                <a href="etapes_visite.php?id_visite=<?=$row['id_visiteguide']?>" class="text-blue-600 hover:text-blue-800 mr-3">
+                                    
                                     <i class="fas fa-list mr-1"></i>Étapes
                                 </a>
-                                <a href="#" class="text-red-600 hover:text-red-800">
+
+                                 <a href="modifier_visite.php?id=<?= $row["id_visiteguide"]  ?>" class="text-green-600 hover:text-green-800 mr-4">
+                                   </i>Modifier
+                                </a>
+
+                                <a href="supprimer_visite.php?id_visite=<?= $row["id_visiteguide"]  ?>" class="text-red-600 hover:text-red-800">
                                     <i class="fas fa-times mr-1"></i>Annuler
                                 </a>
                             </td>
                         </tr>
-                        <tr class="border-t hover:bg-gray-50">
-                            <td class="p-4">Découverte félins</td>
-                            <td class="p-4">18 Mars - 14:00</td>
-                            <td class="p-4">20 personnes</td>
-                            <td class="p-4">
-                                <span class="font-semibold">8/20</span>
-                            </td>
-                            <td class="p-4">
-                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
-                                    Confirmée
-                                </span>
-                            </td>
-                            <td class="p-4">
-                                <a href="etapes_visite.html" class="text-blue-600 hover:text-blue-800 mr-3">
-                                    <i class="fas fa-list mr-1"></i>Étapes
-                                </a>
-                                <a href="#" class="text-red-600 hover:text-red-800">
-                                    <i class="fas fa-times mr-1"></i>Annuler
-                                </a>
-                            </td>
-                        </tr>
+
+                        <?php  }            }?>
+                      
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Mes réservations -->
+   
         <div id="reservations" class="bg-white rounded-xl shadow p-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold">Dernières réservations</h2>
-                <a href="#" class="text-blue-600 hover:text-blue-800">Voir toutes</a>
             </div>
             
             <div class="space-y-4">

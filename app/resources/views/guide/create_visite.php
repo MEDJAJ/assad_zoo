@@ -1,3 +1,52 @@
+
+<?php
+session_start();
+if (file_exists('../../../includes/config.php')) {
+    include '../../../includes/config.php';
+} else {
+    echo 'Fichier config.php introuvable';
+    exit;
+}
+include '../../../includes/functions.php';
+
+if( ($_SERVER["REQUEST_METHOD"] === "POST")){
+
+$regexTitre = '/^[a-zA-ZÀ-ÿ0-9\s]{3,100}$/';
+
+$regexDescription = '/^[a-zA-ZÀ-ÿ0-9\s.,;:!?\'"()\-\n]{10,500}$/';
+
+$regexPrix = '/^\d+(\.\d{1,2})?$/';
+
+$regexLangue = '/^(fr|ar|en)$/';
+
+
+  $titre = trim($_POST['titre']);
+    $description = trim($_POST['description']);
+    $date_visite = $_POST['date_visite'];
+    $duree = (int) $_POST['duree'];
+    $prix = $_POST['prix'];
+    $capacite = (int) $_POST['capacite_max'];
+    $langue = $_POST['langue'];
+
+    if(!validation($description,$regexDescription) ||
+     !validation($titre,$regexTitre) || !validation($prix,$regexPrix) || !validation($langue,$regexLangue)){
+        $message="toutes les champs doit etre valid";
+        $etat="error";
+     }else{
+        $sql="INSERT INTO visite_guidee(titre,date_heure,langue,capaciter_max,duree,prix,status_visiteguide,id_guide)
+        VALUES('$titre','$date_visite','$langue','$capacite','$duree','$prix','en cours','{$_SESSION['user_connecte']}')
+        ";
+        if(mysqli_query($con,$sql)){
+            $message="Visite crée avec sucess";
+            $etat="sucess";
+        }
+     }
+
+
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,7 +57,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gray-50">
-    <!-- Navigation -->
+   
     <nav class="bg-white shadow-lg">
         <div class="container mx-auto px-4 py-3">
             <div class="flex justify-between items-center">
@@ -22,25 +71,25 @@
                     <a href="../visitor/visites.php" class="text-gray-600 hover:text-blue-600">Visites publiques</a>
                     <div class="flex items-center space-x-2">
                         <i class="fas fa-user-circle text-gray-400"></i>
-                        <span class="text-gray-700">Guide Ahmed</span>
+                        <span class="text-gray-700"><?=  $_SESSION['name_user_connecte'] ?></span>
                     </div>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
+ 
     <main class="container mx-auto px-4 py-8">
-        <!-- Header -->
+  
         <div class="mb-8">
             <h1 class="text-3xl font-bold mb-2">Créer une nouvelle visite guidée</h1>
             <p class="text-gray-600">Remplissez les informations ci-dessous</p>
         </div>
 
-        <!-- Formulaire -->
+   
         <div class="bg-white rounded-xl shadow p-8">
-            <form method="POST" action="process_create_visite.php" class="space-y-6">
-                <!-- Titre -->
+            <form method="POST" action="" class="space-y-6">
+              
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         <i class="fas fa-heading mr-2"></i>Titre de la visite *
@@ -54,7 +103,7 @@
                     >
                 </div>
 
-                <!-- Description -->
+          
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         <i class="fas fa-align-left mr-2"></i>Description
@@ -67,7 +116,7 @@
                     ></textarea>
                 </div>
 
-                <!-- Date et durée -->
+       
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -97,7 +146,7 @@
                     </div>
                 </div>
 
-                <!-- Prix et capacité -->
+           
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -130,7 +179,7 @@
                     </div>
                 </div>
 
-                <!-- Langue -->
+               
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         <i class="fas fa-language mr-2"></i>Langue de la visite *
@@ -147,7 +196,7 @@
                     </select>
                 </div>
 
-                <!-- Boutons -->
+              
                 <div class="flex space-x-4 pt-6">
                     <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 font-semibold">
                         <i class="fas fa-save mr-2"></i>Créer la visite

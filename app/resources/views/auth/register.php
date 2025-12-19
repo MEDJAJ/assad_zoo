@@ -1,3 +1,68 @@
+<?php
+if (file_exists('../../../includes/config.php')) {
+    include '../../../includes/config.php';
+} else {
+    echo 'Fichier config.php introuvable';
+}
+
+include '../../../includes/functions.php';
+
+$message = "";
+$etat = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $nom = trim($_POST["nom"]);
+    $email = trim($_POST["email"]);
+    $password = trim($_POST["password"]);
+    $role = trim($_POST["role"]);
+    $pays = trim($_POST["pays"]);
+
+    if (
+        !validation($nom, "/^[a-zA-ZÀ-ÿ\s]{2,50}$/") ||
+        !validation($email, "/^[^\s@]+@[^\s@]+\.[^\s@]+$/") ||
+        !validation($password, "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/") ||
+        !validation($role, "/^(guide|visitor)$/") ||
+        !validation($pays, "/^[a-zA-ZÀ-ÿ\s]{2,50}$/")
+    ) {
+        $etat = "error";
+        $message = "Tous les champs doivent être valides";
+    } else {
+
+        $password = password_hash($password, PASSWORD_DEFAULT);
+
+    
+        $nom = mysqli_real_escape_string($con, $nom);
+        $email = mysqli_real_escape_string($con, $email);
+        $role = mysqli_real_escape_string($con, $role);
+        $password = mysqli_real_escape_string($con, $password);
+        $pays = mysqli_real_escape_string($con, $pays);
+
+         $sql="";
+        if($role==='guide'){
+             $sql = "INSERT INTO Utilisateur (nom, email, role, mot_passe, status_utilisateure, paye)
+                VALUES ('$nom', '$email', '$role', '$password', FALSE, '$pays')";
+        }else{
+             $sql = "INSERT INTO Utilisateur (nom, email, role, mot_passe, status_utilisateure, paye)
+                VALUES ('$nom', '$email', '$role', '$password', TRUE, '$pays')";
+        }
+
+  
+
+        if (mysqli_query($con, $sql)) {
+            $etat = "success";
+            $message = "Compte créé avec succès";
+        } else {
+            $etat = "error";
+            $message = "Erreur d'insertion : " . mysqli_error($con);
+        }
+    }
+}
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -79,8 +144,23 @@
             </div>
             
           
-            <form method="POST" action="process_register.php" class="space-y-6">
-             
+            <form method="POST" action="" class="space-y-6 mt-64">
+                     <?php
+           if($etat==="error"){
+
+echo   "<div class='text-center mt-4 mb-4 text-red-500 border border-black  pb-2 bg-red-100'>";
+       echo "<p class='text-red-600 mt-2 font-bold'>$message</p>";
+   echo "</div>";
+           }elseif($etat==="success"){
+        
+echo   "<div class='text-center mt-4 mb-4 text-red-500 border border-black  pb-2 bg-green-100'>";
+     echo "<p class='text-green-600 mt-2 font-bold'>$message</p>";
+   echo "</div>";
+           }
+            
+          
+            ?>
+          
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         <i class="fas fa-user mr-2"></i>Nom complet *
@@ -90,8 +170,8 @@
                             type="text" 
                             name="nom" 
                             required
-                            pattern="[A-Za-zÀ-ÿ\s\-']{2,50}"
-                            title="2 à 50 caractères, lettres, espaces, tirets et apostrophes seulement"
+                           value="<?php echo isset($_POST["nom"])  ? htmlspecialchars($_POST["nom"]) : ''    ?>"
+                           
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500 pl-12"
                             placeholder="Votre nom et prénom"
                         >
@@ -111,6 +191,7 @@
                         <input 
                             type="email" 
                             name="email" 
+                            value="<?php echo isset($_POST["email"]) ? htmlspecialchars($_POST["email"]) :''  ?>"
                             required
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500 pl-12"
                             placeholder="votre@email.com"
@@ -130,9 +211,9 @@
                         <input 
                             type="password" 
                             name="password" 
+                            value="<?php echo isset($_POST["password"]) ? htmlspecialchars($_POST["password"]) : '' ?>"
                             required
-                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                            title="8 caractères minimum, avec au moins 1 majuscule, 1 minuscule et 1 chiffre"
+                           
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500 pl-12"
                             placeholder="Créez un mot de passe sécurisé"
                         >
@@ -146,22 +227,25 @@
                 </div>
                 
                
-                <div>
+              <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-lock mr-2"></i>Confirmer le mot de passe *
+                        <i class="fas fa-user mr-2"></i>Pays Naom *
                     </label>
                     <div class="relative">
                         <input 
-                            type="password" 
-                            name="confirm_password" 
+                            type="text" 
+                            name="pays" 
                             required
+                           value="<?php echo isset($_POST["pays"]) ? htmlspecialchars($_POST["pays"]) : ''     ?>"
+                          
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500 pl-12"
-                            placeholder="Répétez votre mot de passe"
+                            placeholder="Votre nom et prénom"
                         >
                         <div class="absolute left-4 top-3.5 text-gray-400">
-                            <i class="fas fa-lock"></i>
+                            <i class="fas fa-user"></i>
                         </div>
                     </div>
+                    <p class="text-xs text-gray-500 mt-1">Ex: morroco</p>
                 </div>
                 
              
@@ -177,8 +261,8 @@
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500 pl-12 appearance-none bg-white"
                         >
                             <option value="">Sélectionnez un rôle...</option>
-                            <option value="visiteur">👤 Visiteur</option>
-                            <option value="guide">🧭 Guide</option>
+                            <option value="visitor" <?php echo isset($_POST["role"])  && $_POST["role"]=='visitor' ? 'selected' :'' ?>>👤 Visiteur</option>
+                            <option value="guide" <?php echo isset($_POST["role"])  && $_POST["role"]=='guide' ? 'selected' :'' ?>>🧭 Guide</option>
                         </select>
                         <div class="absolute left-4 top-3.5 text-gray-400">
                             <i class="fas fa-user-tag"></i>
@@ -202,25 +286,7 @@
                 </div>
                 
       
-                <div class="flex items-start">
-                    <div class="flex items-center h-5">
-                        <input 
-                            id="terms" 
-                            name="terms" 
-                            type="checkbox" 
-                            required
-                            class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                        >
-                    </div>
-                    <div class="ml-3 text-sm">
-                        <label for="terms" class="text-gray-700">
-                            J'accepte les 
-                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">conditions d'utilisation</a> 
-                            et la 
-                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">politique de confidentialité</a>
-                        </label>
-                    </div>
-                </div>
+           
                 
              
                 <button type="submit" class="w-full gradient-bg text-white py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition duration-300 flex items-center justify-center">
