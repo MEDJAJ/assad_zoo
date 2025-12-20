@@ -1,243 +1,165 @@
+<?php
+
+if (file_exists('../../../includes/config.php')) {
+    include '../../../includes/config.php';
+} else {
+    echo 'Fichier config.php introuvable';
+    exit;
+}
+
+
+$id_habitat = isset($_GET['habitat']) ? intval($_GET['habitat']) : 0;
+$pays = isset($_GET['pays']) ? trim($_GET['pays']) : '';
+
+
+$habitats = mysqli_query($con, "SELECT id_habitat, nom FROM habitats");
+
+
+$pays_list = mysqli_query($con, "SELECT DISTINCT pays_origine FROM animaux");
+
+
+$sql = "
+SELECT a.*, h.nom AS habitat_nom
+FROM animaux a
+INNER JOIN habitats h ON a.id_habitat = h.id_habitat
+WHERE 1
+";
+
+$params = [];
+$types = "";
+
+
+if ($id_habitat > 0) {
+    $sql .= " AND a.id_habitat = ?";
+    $params[] = $id_habitat;
+    $types .= "i";
+}
+
+
+if (!empty($pays)) {
+    $sql .= " AND a.pays_origine = ?";
+    $params[] = $pays;
+    $types .= "s";
+}
+
+$stmt = $con->prepare($sql);
+
+if (!empty($params)) {
+    $stmt->bind_param($types, ...$params);
+}
+
+$stmt->execute();
+$result_animaux = $stmt->get_result();
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tous les animaux - Zoo ASSAD</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gray-50">
 
-    <nav class="bg-white shadow-lg ">
-        <div class="container mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <span class="text-3xl">🦁</span>
-                    <a href="fiche_speciale.php" class="text-xl font-bold text-gray-800">Zoo ASSAD</a>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="home.php" class="text-gray-600 hover:text-blue-600">Accueil</a>
-                    <a href="animals.php" class="text-blue-600 font-semibold">Animaux</a>
-                    <a href="visites.php" class="text-gray-600 hover:text-blue-600">Visites</a>
-                    <a href="../auth/login.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Connexion</a>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-   
-    <header class="bg-white py-8">
-        <div class="container mx-auto px-4">
-            <h1 class="text-4xl font-bold mb-6">Tous les animaux</h1>
+<nav class="bg-white shadow-lg">
+    <div class="container mx-auto px-4 py-3 flex justify-between">
+        <div class="flex items-center space-x-2">
+            <span class="text-3xl">🦁</span>
+            <a href="home.php" class="text-xl font-bold">Zoo ASSAD</a>
+        </div>
+        <div class="space-x-6">
+            <a href="home.php">Accueil</a>
+            <a href="animals.php" class="text-blue-600 font-semibold">Animaux</a>
+            <a href="visites.php">Visites</a>
+            <a href="../auth/login.php" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Connexion</a>
+        </div>
+    </div>
+</nav>
+
+
+<header class="bg-white py-8">
+    <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold mb-6">Tous les animaux</h1>
+
+        <form method="GET" class="flex flex-col md:flex-row gap-4 mb-8">
+
             
-          
-            <div class="flex flex-col md:flex-row gap-4 mb-8">
-               
-                <div class="flex-1">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Habitat</label>
-                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                        <option value="">Tous les habitats</option>
-                        <option value="savane">Savane</option>
-                        <option value="foret">Forêt tropicale</option>
-                        <option value="desert">Désert</option>
-                        <option value="montagne">Montagne</option>
-                    </select>
-                </div>
-                
-         
-                <div class="flex-1">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Pays d'origine</label>
-                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                        <option value="">Tous les pays</option>
-                        <option value="maroc">Maroc</option>
-                        <option value="kenya">Kenya</option>
-                        <option value="tanzanie">Tanzanie</option>
-                        <option value="afrique_du_sud">Afrique du Sud</option>
-                    </select>
-                </div>
-                
-                
-                <div class="flex items-end">
-                    <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 h-[42px]">
+            <div class="flex-1">
+                <label class="block text-sm font-medium mb-2">Habitat</label>
+                <select name="habitat" class="w-full px-4 py-2 border rounded-lg">
+                    <option value="">Tous les habitats</option>
+                    <?php while ($h = mysqli_fetch_assoc($habitats)) { ?>
+                        <option value="<?= $h['id_habitat'] ?>"
+                            <?= ($id_habitat == $h['id_habitat']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($h['nom']) ?>
+                        </option>
+                    <?php } ?>
+                </select>
+            </div>
+
+
+            <div class="flex-1">
+                <label class="block text-sm font-medium mb-2">Pays d'origine</label>
+                <select name="pays" class="w-full px-4 py-2 border rounded-lg">
+                    <option value="">Tous les pays</option>
+                    <?php while ($p = mysqli_fetch_assoc($pays_list)) { ?>
+                        <option value="<?= htmlspecialchars($p['pays_origine']) ?>"
+                            <?= ($pays === $p['pays_origine']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($p['pays_origine']) ?>
+                        </option>
+                    <?php } ?>
+                </select>
+            </div>
+
+
+            <div class="flex items-end">
+                <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
                     Filtrer
-                    </button>
-                </div>
+                </button>
             </div>
-        </div>
-    </header>
+        </form>
+    </div>
+</header>
 
 
-    <main class="container mx-auto px-4 py-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            
-           
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=400" 
-                     alt="Lion" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Lion de l'Atlas</h3>
-                    <div class="flex items-center text-gray-600 mb-2">
-                        <i class="fas fa-paw mr-2"></i>
-                        <span>Félin</span>
+<main class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+        <?php if ($result_animaux->num_rows > 0) { ?>
+            <?php while ($a = $result_animaux->fetch_assoc()) { ?>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="../../../assets/uploads/<?= htmlspecialchars($a['image']) ?>"
+                         class="w-full h-48 object-cover">
+
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg"><?= htmlspecialchars($a['nom']) ?></h3>
+
+                        <div class="text-gray-600 mb-1">
+                            <i class="fas fa-paw mr-2"></i><?= htmlspecialchars($a['espece']) ?>
+                        </div>
+
+                        <div class="text-gray-600 mb-3">
+                            <i class="fas fa-globe mr-2"></i><?= htmlspecialchars($a['pays_origine']) ?>
+                        </div>
+
+                      
                     </div>
-                    <div class="flex items-center text-gray-600 mb-4">
-                        <i class="fas fa-globe-africa mr-2"></i>
-                        <span>Maroc</span>
-                    </div>
-                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-                        Voir détails
-                    </a>
                 </div>
-            </div>
+            <?php } ?>
+        <?php } else { ?>
+            <p class="col-span-full text-center text-gray-500">
+                Aucun animal trouvé.
+            </p>
+        <?php } ?>
 
-        
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=400" 
-                     alt="Éléphant" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Éléphant d'Afrique</h3>
-                    <div class="flex items-center text-gray-600 mb-2">
-                        <i class="fas fa-paw mr-2"></i>
-                        <span>Éléphantidé</span>
-                    </div>
-                    <div class="flex items-center text-gray-600 mb-4">
-                        <i class="fas fa-globe-africa mr-2"></i>
-                        <span>Kenya</span>
-                    </div>
-                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-                        Voir détails
-                    </a>
-                </div>
-            </div>
+    </div>
+</main>
 
-         
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1559253664-ca249d4608c6?auto=format&fit=crop&w=400" 
-                     alt="Girafe" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Girafe</h3>
-                    <div class="flex items-center text-gray-600 mb-2">
-                        <i class="fas fa-paw mr-2"></i>
-                        <span>Giraffidé</span>
-                    </div>
-                    <div class="flex items-center text-gray-600 mb-4">
-                        <i class="fas fa-globe-africa mr-2"></i>
-                        <span>Tanzanie</span>
-                    </div>
-                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-                        Voir détails
-                    </a>
-                </div>
-            </div>
+<footer class="bg-gray-800 text-white py-8 mt-12 text-center">
+    &copy; 2024 Zoo Virtuel ASSAD
+</footer>
 
-        
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1567177662142-20646e1b6c69?auto=format&fit=crop&w=400" 
-                     alt="Zèbre" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Zèbre</h3>
-                    <div class="flex items-center text-gray-600 mb-2">
-                        <i class="fas fa-paw mr-2"></i>
-                        <span>Équidé</span>
-                    </div>
-                    <div class="flex items-center text-gray-600 mb-4">
-                        <i class="fas fa-globe-africa mr-2"></i>
-                        <span>Afrique du Sud</span>
-                    </div>
-                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-                        Voir détails
-                    </a>
-                </div>
-            </div>
-
-          
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?auto=format&fit=crop&w=400" 
-                     alt="Rhinocéros" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Rhinocéros</h3>
-                    <div class="flex items-center text-gray-600 mb-2">
-                        <i class="fas fa-paw mr-2"></i>
-                        <span>Rhinocérotidé</span>
-                    </div>
-                    <div class="flex items-center text-gray-600 mb-4">
-                        <i class="fas fa-globe-africa mr-2"></i>
-                        <span>Namibie</span>
-                    </div>
-                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-                        Voir détails
-                    </a>
-                </div>
-            </div>
-
-           
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1519066629447-267fffa62d4b?auto=format&fit=crop&w=400" 
-                     alt="Hippopotame" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Hippopotame</h3>
-                    <div class="flex items-center text-gray-600 mb-2">
-                        <i class="fas fa-paw mr-2"></i>
-                        <span>Hippopotamidé</span>
-                    </div>
-                    <div class="flex items-center text-gray-600 mb-4">
-                        <i class="fas fa-globe-africa mr-2"></i>
-                        <span>Zambie</span>
-                    </div>
-                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-                        Voir détails
-                    </a>
-                </div>
-            </div>
-
-           
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1551085254-e96b210db58a?auto=format&fit=crop&w=400" 
-                     alt="Guépard" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Guépard</h3>
-                    <div class="flex items-center text-gray-600 mb-2">
-                        <i class="fas fa-paw mr-2"></i>
-                        <span>Félin</span>
-                    </div>
-                    <div class="flex items-center text-gray-600 mb-4">
-                        <i class="fas fa-globe-africa mr-2"></i>
-                        <span>Botswana</span>
-                    </div>
-                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-                        Voir détails
-                    </a>
-                </div>
-            </div>
-
-            
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1550358864-518f202c02ba?auto=format&fit=crop&w=400" 
-                     alt="Crocodile" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h3 class="font-bold text-lg mb-2">Crocodile</h3>
-                    <div class="flex items-center text-gray-600 mb-2">
-                        <i class="fas fa-paw mr-2"></i>
-                        <span>Crocodilien</span>
-                    </div>
-                    <div class="flex items-center text-gray-600 mb-4">
-                        <i class="fas fa-globe-africa mr-2"></i>
-                        <span>Égypte</span>
-                    </div>
-                    <a href="animal_details.php" class="block text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-                        Voir détails
-                    </a>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    
-    <footer class="bg-gray-800 text-white py-8 mt-12">
-        <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2024 Zoo Virtuel ASSAD</p>
-        </div>
-    </footer>
 </body>
 </html>

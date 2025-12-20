@@ -78,18 +78,7 @@ if(!$visite_result){
                 <p class="text-xl mb-8">Explorez la faune africaine et les lions de l'Atlas</p>
                 
        
-                <div class="max-w-2xl mx-auto">
-                    <div class="relative">
-                        <input 
-                            type="text" 
-                            placeholder="Rechercher des animaux, visites..."
-                            class="w-full px-6 py-4 rounded-lg text-gray-800 focus:outline-none"
-                        >
-                        <button class="absolute right-3 top-3 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
-                            <i class="fas fa-search"></i> Rechercher
-                        </button>
-                    </div>
-                </div>
+               
             </div>
         </div>
     </header>

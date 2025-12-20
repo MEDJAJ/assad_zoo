@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Asaad - Lion des Atlas</title>
 
-  <!-- Fonts -->
+
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 
-  <!-- Tailwind -->
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {

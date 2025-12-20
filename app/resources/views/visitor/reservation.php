@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 if (file_exists('../../../includes/config.php')) {
     include '../../../includes/config.php';
 } else {
@@ -7,15 +7,41 @@ if (file_exists('../../../includes/config.php')) {
     exit;
 }
 
-if(!isset($_GET['id'])){
-    die("cette id not existe");
-}
-$id_visite=intval($_GET['id']);
+$id_visite = intval($_GET['id']);
 
-$guide_visites="SELECT * FROM Utilisateur u INNER JOIN visite_guidee v ON v.id_guide=u.id_utilisateure AND v.id_visiteguide='$id_visite'";
-$result=mysqli_query($con,$guide_visites);
-$row = mysqli_fetch_assoc($result);
-print_r($row);
+$guide_visites = "
+    SELECT *
+    FROM Utilisateur u
+    INNER JOIN visite_guidee v
+        ON v.id_guide = u.id_utilisateure
+    WHERE v.id_visiteguide = $id_visite
+";
+
+$result = mysqli_query($con, $guide_visites);
+
+if(!$result){
+    die("Erreur de récupération des données : " . mysqli_error($con));
+}
+
+if(mysqli_num_rows($result) > 0){
+    $row = mysqli_fetch_assoc($result);
+   
+} else {
+    echo "Aucune donnée trouvée.";
+}
+$id_userconnecter=$_SESSION["user_connecte"];
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+    $nb_persones=trim($_POST["nb_personnes"]);
+     
+
+     $sql="INSERT INTO reservation(nb_personnes,id_utilisateure,id_visiteguide)
+     VALUES('$nb_persones','$id_userconnecter','$id_visite')
+     
+     ";
+     if(!mysqli_query($con,$sql)){
+             echo "Error de récuperation de donner ";
+     }
+}
 
 
 ?>
@@ -67,31 +93,40 @@ print_r($row);
                         <div class="space-y-4">
                             <div class="flex items-center">
                                 <div class="w-32 font-semibold">Visite:</div>
-                                <div class="text-lg font-bold">Safari matinal complet</div>
+                                <div class="text-lg font-bold"><?= $row["titre"] ?></div>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-32 font-semibold">Date:</div>
-                                <div>15 Mars 2024 - 10:00</div>
+                                <div><?= $row["date_heure"] ?></div>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-32 font-semibold">Durée:</div>
-                                <div>2 heures</div>
+                                <div><?= $row["duree"] ?> heures</div>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-32 font-semibold">Guide:</div>
-                                <div>Ahmed</div>
+                                <div><?= $row["nom"] ?></div>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-32 font-semibold">Langue:</div>
-                                <div>Français</div>
+                                <div><?= $row["langue"] ?></div>
                             </div>
                             <div class="flex items-center">
                                 <div class="w-32 font-semibold">Places disponibles:</div>
-                                <div class="text-green-600 font-semibold">12 places</div>
+                                <div class="text-green-600 font-semibold"><?= $row["capaciter_max"] ?> places</div>
                             </div>
                         </div>
                     </div>
+                   <div class="fixed top-[490px] right-24">
+    <button
+    
+        onclick="window.location.href='commentaire.php?id=<?=$id_visite?>&id_utilisateure=<?=$id_userconnecter?>'"
+        class="rounded-full bg-yellow-500 p-4 text-blue-800 border-2 border-blue-900 hover:bg-yellow-400">
+        Commentaire
+    </button>
+</div>
 
+                   
                     
                     <div class="bg-white rounded-xl shadow-lg p-6">
                         <h2 class="text-2xl font-bold mb-6">Informations de réservation</h2>
@@ -103,21 +138,14 @@ print_r($row);
                                     Nombre de personnes *
                                 </label>
                                 <div class="flex items-center space-x-4">
-                                    <button type="button" class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
+                                
                                     <input 
                                         type="number" 
                                         name="nb_personnes" 
-                                        min="1" 
-                                        max="12" 
-                                        value="1"
                                         class="w-20 text-center px-3 py-2 border border-gray-300 rounded-lg"
                                         required
                                     >
-                                    <button type="button" class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
+                                    
                                     <span class="text-gray-600">(Maximum: 12 personnes)</span>
                                 </div>
                             </div>
@@ -142,20 +170,17 @@ print_r($row);
                         <div class="space-y-4 mb-6">
                             <div class="flex justify-between">
                                 <span>Visite:</span>
-                                <span class="font-semibold">Safari matinal</span>
+                                <span class="font-semibold"><?= $row["titre"] ?></span>
                             </div>
                             <div class="flex justify-between">
                                 <span>Prix unitaire:</span>
-                                <span class="font-semibold">150 MAD</span>
+                                <span class="font-semibold"><?= $row["prix"] ?> MAD</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span>Nombre de personnes:</span>
-                                <span class="font-semibold">1</span>
-                            </div>
+                            
                             <div class="border-t pt-4">
                                 <div class="flex justify-between text-lg font-bold">
                                     <span>Total:</span>
-                                    <span>150 MAD</span>
+                                    <span><?= $row["prix"] ?> MAD</span>
                                 </div>
                             </div>
                         </div>

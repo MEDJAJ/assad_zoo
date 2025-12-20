@@ -12,6 +12,12 @@ $sql="SELECT * FROM visite_guidee WHERE id_guide=$id ";
 
 $result=mysqli_query($con,$sql);
 
+
+
+$reservations="SELECT * FROM Utilisateur u INNER JOIN reservation r ON r.id_utilisateure=u.id_utilisateure
+INNER JOIN visite_guidee v ON r.id_visiteguide=v.id_visiteguide WHERE id_guide='$id'
+";
+$reservations_result=mysqli_query($con,$reservations);
 ?>
 
 
@@ -71,8 +77,8 @@ $result=mysqli_query($con,$sql);
             <div class="bg-white rounded-xl shadow p-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-gray-500">Réservations aujourd'hui</p>
-                        <p class="text-3xl font-bold">12</p>
+                        <p class="text-gray-500">Réservations </p>
+                        <p class="text-3xl font-bold"><?= mysqli_num_rows($reservations_result)?></p>
                     </div>
                     <div class="bg-green-100 p-3 rounded-full">
                         <i class="fas fa-ticket-alt text-green-600 text-xl"></i>
@@ -80,30 +86,20 @@ $result=mysqli_query($con,$sql);
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow p-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-gray-500">Note moyenne</p>
-                        <p class="text-3xl font-bold">4.7</p>
-                    </div>
-                    <div class="bg-yellow-100 p-3 rounded-full">
-                        <i class="fas fa-star text-yellow-600 text-xl"></i>
-                    </div>
-                </div>
-            </div>
+           
         </div>
 
      
         <div class="bg-white rounded-xl shadow p-6 mb-8">
             <h2 class="text-xl font-bold mb-4">Actions rapides</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <a href="create_visite.html" class="bg-blue-600 text-white p-4 rounded-lg hover:bg-blue-700 text-center">
+                <a href="create_visite.php" class="bg-blue-600 text-white p-4 rounded-lg hover:bg-blue-700 text-center">
                     <i class="fas fa-plus text-2xl mb-2 block"></i>
                     <span>Nouvelle visite</span>
                 </a>
-                <a href="etapes_visite.html" class="bg-green-600 text-white p-4 rounded-lg hover:bg-green-700 text-center">
+                <a href="#visites" class="bg-green-600 text-white p-4 rounded-lg hover:bg-green-700 text-center">
                     <i class="fas fa-list-ol text-2xl mb-2 block"></i>
-                    <span>Gérer étapes</span>
+                    <span>Voir Visites</span>
                 </a>
                 <a href="#reservations" class="bg-purple-600 text-white p-4 rounded-lg hover:bg-purple-700 text-center">
                     <i class="fas fa-users text-2xl mb-2 block"></i>
@@ -113,14 +109,14 @@ $result=mysqli_query($con,$sql);
         </div>
 
 
-        <div class="bg-white rounded-xl shadow p-6 mb-8">
+        <div class="bg-white rounded-xl shadow p-6 mb-8" id="visites">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold">Mes visites à venir</h2>
               
             </div>
             
-            <div class="overflow-x-auto">
-                <table class="w-full">
+            <div class="overflow-x-auto"  >
+                <table class="w-full" >
                     <thead class="bg-gray-100">
                         <tr>
                             <th class="p-4 text-left">Titre</th>
@@ -175,29 +171,35 @@ $result=mysqli_query($con,$sql);
    
         <div id="reservations" class="bg-white rounded-xl shadow p-6">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold">Dernières réservations</h2>
+                <h2 class="text-xl font-bold"> réservations</h2>
             </div>
             
             <div class="space-y-4">
+<?php
+
+if ($reservations_result && mysqli_num_rows($reservations_result) > 0) {
+    while ($row = mysqli_fetch_assoc($reservations_result)) {
+        
+
+?>
                 <div class="flex items-center justify-between p-4 border rounded-lg">
+
                     <div>
-                        <p class="font-semibold">Karim Alami</p>
-                        <p class="text-gray-600 text-sm">Safari matinal - 2 personnes</p>
+                        <p class="font-semibold"><?= $row['nom'] ?></p>
+                        <p class="text-gray-600 text-sm"><?= $row['titre']?> - <?= $row['nb_personnes'] ?> personnes</p>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-500">Réservé le: 10 Mars</p>
+                        <p class="text-sm text-gray-500">Réservé le: <?= $row['date_reservation']?></p>
                     </div>
                 </div>
-                
-                <div class="flex items-center justify-between p-4 border rounded-lg">
-                    <div>
-                        <p class="font-semibold">Fatima Zahra</p>
-                        <p class="text-gray-600 text-sm">Découverte félins - 4 personnes</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Réservé le: 9 Mars</p>
-                    </div>
-                </div>
+                <?php
+                 }
+                 } else {
+    echo "Aucune réservation trouvée";
+}   ?>
+
+          
+
             </div>
         </div>
     </main>

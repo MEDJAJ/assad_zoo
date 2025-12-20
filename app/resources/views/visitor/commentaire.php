@@ -1,3 +1,63 @@
+
+<?php
+
+if (file_exists('../../../includes/config.php')) {
+    include '../../../includes/config.php';
+} else {
+    echo 'Fichier config.php introuvable';
+    exit;
+}
+include '../../../includes/functions.php';
+
+$id_visite=isset($_GET['id']) ? intval($_GET['id']) :0;
+$id_utilisateure=isset($_GET['id_utilisateure']) ? intval($_GET['id_utilisateure']) :0;
+if($id_visite==0){
+    die("cette id not existe");
+}
+if($id_utilisateure==0){
+        die("cette id utilisateure not existe");
+}
+
+$sql="SELECT * FROM Utilisateur u INNER JOIN visite_guidee v ON v.id_guide=u.id_utilisateure WHERE id_visiteguide=$id_visite";
+$result=mysqli_query($con,$sql);
+if(!$result){
+    die("Error de la récupération de donner");
+}
+
+
+
+
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+$regex_titre = "/^[a-zA-ZÀ-ÿ0-9\s'’.,!?-]{3,100}$/";
+$regex_commentaire = "/^[a-zA-ZÀ-ÿ0-9\s'’.,!?():;-]{10,1000}$/";
+$note=$_POST['note'];
+$titre=trim($_POST['titre']);
+$commentaire=trim($_POST['commentaire']);
+if(!validation($titre,$regex_titre) || !validation($commentaire,$regex_commentaire)){
+    die("toutes les champs doit etre valide");
+}
+$sql_commentaire="INSERT INTO commentaire(note,content,id_visiteguide,id_utilisateure,titre)
+VALUES('$note','$commentaire','$id_visite','$id_utilisateure','$titre')
+";
+$result_commentaire=mysqli_query($con,$sql_commentaire);
+if(!$result_commentaire){
+    die("Error de la Insertition");
+}
+
+  header("Location: commentaire.php?id=$id_visite&id_utilisateure=$id_utilisateure&success=1");
+    exit;
+}
+
+
+$sql_recupertion_commentaire="SELECT * FROM Utilisateur u INNER JOIN Commentaire c ON u.id_utilisateure=c.id_utilisateure ORDER BY c.date_commentaire DESC";
+$result_recuperation_commentaire=mysqli_query($con,$sql_recupertion_commentaire);
+if(!$result_recuperation_commentaire){
+    die("Error de la récuperation de commentaire");
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -34,90 +94,90 @@
                 <h1 class="text-3xl font-bold mb-4">Laisser un commentaire</h1>
                 <p class="text-gray-600">Partagez votre expérience sur la visite guidée</p>
             </div>
+<?php
+if(mysqli_num_rows($result)>0){
+    $row_result=mysqli_fetch_assoc($result);
 
+?>
          
             <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
                 <h2 class="text-xl font-bold mb-4">Visite concernée</h2>
                 <div class="flex items-center">
                     <div class="w-24 font-semibold">Visite:</div>
-                    <div class="text-lg">Safari matinal complet</div>
+                    <div class="text-lg"><?=$row_result["titre"] ?></div>
                 </div>
                 <div class="flex items-center mt-2">
                     <div class="w-24 font-semibold">Date:</div>
-                    <div>10 Mars 2024 - 10:00</div>
+                    <div><?=$row_result["date_heure"] ?></div>
                 </div>
                 <div class="flex items-center mt-2">
                     <div class="w-24 font-semibold">Guide:</div>
-                    <div>Ahmed</div>
+                    <div><?=$row_result["nom"] ?></div>
                 </div>
             </div>
 
-          
+          <?php } ?>
             <div class="bg-white rounded-xl shadow-lg p-6">
-                <form method="POST" action="process_comment.php">
-                    
-                    <div class="mb-8">
-                        <label class="block text-sm font-medium text-gray-700 mb-4">
-                            Note (1 à 5 étoiles) 
-                        </label>
-                        <div class="flex space-x-2 justify-center">
-                            <input type="radio" name="note" id="star5" value="5" class="hidden">
-                            <label for="star5" class="text-4xl cursor-pointer text-gray-300 hover:text-yellow-400">★</label>
-                            
-                            <input type="radio" name="note" id="star4" value="4" class="hidden">
-                            <label for="star4" class="text-4xl cursor-pointer text-gray-300 hover:text-yellow-400">★</label>
-                            
-                            <input type="radio" name="note" id="star3" value="3" class="hidden">
-                            <label for="star3" class="text-4xl cursor-pointer text-gray-300 hover:text-yellow-400">★</label>
-                            
-                            <input type="radio" name="note" id="star2" value="2" class="hidden">
-                            <label for="star2" class="text-4xl cursor-pointer text-gray-300 hover:text-yellow-400">★</label>
-                            
-                            <input type="radio" name="note" id="star1" value="1" class="hidden" required>
-                            <label for="star1" class="text-4xl cursor-pointer text-gray-300 hover:text-yellow-400">★</label>
-                        </div>
-                        <div class="flex justify-between text-sm text-gray-500 mt-2">
-                            <span>Mauvais</span>
-                            <span>Excellent</span>
-                        </div>
-                    </div>
+             <form method="POST" action="">
+    
+  
+    <div class="mb-8">
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+            Note (1 à 5)
+        </label>
+        <input 
+            type="number"
+            name="note"
+            min="1"
+            max="5"
+            required
+            class="w-32 mx-auto block px-4 py-2 border border-gray-300 rounded-lg text-center"
+            placeholder="1 à 5"
+        >
+        <div class="flex justify-between text-sm text-gray-500 mt-2">
+            <span>Mauvais</span>
+            <span>Excellent</span>
+        </div>
+    </div>
 
-                  
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Titre du commentaire
-                        </label>
-                        <input 
-                            type="text" 
-                            name="titre" 
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                            placeholder="Ex: Super expérience !"
-                        >
-                    </div>
+   
+    <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+            Titre du commentaire
+        </label>
+        <input 
+            type="text"
+            name="titre"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+            placeholder="Ex: Super expérience !"
+        >
+    </div>
 
-                  
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Votre commentaire *
-                        </label>
-                        <textarea 
-                            name="commentaire" 
-                            rows="6"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                            placeholder="Décrivez votre expérience..."
-                            required
-                        ></textarea>
-                    </div>
+   
+    <div class="mb-6">
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+            Votre commentaire *
+        </label>
+        <textarea 
+            name="commentaire"
+            rows="6"
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg"
+            placeholder="Décrivez votre expérience..."
+        ></textarea>
+    </div>
 
-                 
-               
-                  
-                    <div class="text-center">
-                        <button type="submit" class="bg-blue-600 text-white py-3 px-8 rounded-lg font-semibold hover:bg-blue-700 text-lg">
-                            <i class="fas fa-paper-plane mr-2"></i>Publier le commentaire
-                        </button>
-                    </div>
-                </form>
+    <div class="text-center">
+        <button 
+            type="submit"
+            class="bg-blue-600 text-white py-3 px-8 rounded-lg font-semibold hover:bg-blue-700 text-lg"
+        >
+            <i class="fas fa-paper-plane mr-2"></i>Publier le commentaire
+        </button>
+    </div>
+</form>
+
             </div>
 
         
@@ -126,38 +186,35 @@
                 
                 <div class="space-y-6">
            
+<?php       if(mysqli_num_rows($result_recuperation_commentaire)>0){
+    while($row=mysqli_fetch_assoc($result_recuperation_commentaire)){
+
+    
+
+         ?>
+
                     <div class="bg-white rounded-lg shadow p-6">
                         <div class="flex justify-between items-start mb-3">
                             <div>
-                                <h3 class="font-bold">Super visite !</h3>
+                                <h3 class="font-bold"><?= $row['titre'] ?> !</h3>
                                 <div class="flex items-center text-yellow-500">
-                                    ★★★★★
-                                    <span class="ml-2 text-sm text-gray-600">10 Mars 2024</span>
+                                   
+                                    <span class="ml-2 text-sm text-gray-600"><?= $row['date_commentaire'] ?></span>
                                 </div>
                             </div>
-                            <span class="text-sm text-gray-500">Par Ahmed</span>
+                            <span class="text-sm text-gray-500">Par <?= $row['nom'] ?> </span>
                         </div>
+                          <p class="text-gray-700 mt-2 mb-2">
+                       Note :   <?=  $row['note'] ?> 
+                        </p>
                         <p class="text-gray-700">
-                            Guide très compétent, explications claires. J'ai adoré la partie sur les lions de l'Atlas.
+                         <?= $row['content'] ?> 
                         </p>
                     </div>
 
+<?php          }          }                  ?>
                  
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <div class="flex justify-between items-start mb-3">
-                            <div>
-                                <h3 class="font-bold">Expérience enrichissante</h3>
-                                <div class="flex items-center text-yellow-500">
-                                    ★★★★☆
-                                    <span class="ml-2 text-sm text-gray-600">8 Mars 2024</span>
-                                </div>
-                            </div>
-                            <span class="text-sm text-gray-500">Par Fatima</span>
-                        </div>
-                        <p class="text-gray-700">
-                            Parfait pour les familles. Mes enfants étaient captivés tout au long de la visite.
-                        </p>
-                    </div>
+                   
                 </div>
             </div>
         </div>
