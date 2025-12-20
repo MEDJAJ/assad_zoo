@@ -1,3 +1,41 @@
+<?php
+if (file_exists('../../../includes/config.php')) {
+    include '../../../includes/config.php';
+} else {
+    echo 'Fichier config.php introuvable';
+}
+
+$requéte_sql_u="SELECT * FROM utilisateur";
+$requéte_sql_a="SELECT * FROM animaux";
+$requéte_sql_v="SELECT * FROM visite_guidee";
+$requéte_sql_r="SELECT * FROM reservation";
+
+$result__sql_u=mysqli_query($con,$requéte_sql_u);
+$result__sql_a=mysqli_query($con,$requéte_sql_a);
+$result__sql_v=mysqli_query($con,$requéte_sql_v);
+$result__sql_r=mysqli_query($con,$requéte_sql_r);
+
+if(!$result__sql_u){
+    die("Error de la récuperation utilsateures");
+}
+if(!$result__sql_a){
+    die("Error de la récuperation animaux");
+}
+if(!$result__sql_v){
+    die("Error de la récuperation visites");
+}
+if(!$result__sql_r){
+    die("Error de la récuperation reservation");
+}
+?>
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -60,7 +98,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-gray-500">Total Utilisateurs</p>
-                            <p class="text-3xl font-bold">1,248</p>
+                            <p class="text-3xl font-bold"><?= mysqli_num_rows($result__sql_u) ?></p>
                         </div>
                         <div class="bg-blue-100 p-3 rounded-full">
                             <i class="fas fa-users text-blue-600 text-xl"></i>
@@ -71,8 +109,8 @@
                 <div class="bg-white rounded-xl shadow p-6">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500">Animaux</p>
-                            <p class="text-3xl font-bold">156</p>
+                            <p class="text-gray-500">Total Animaux</p>
+                            <p class="text-3xl font-bold"><?= mysqli_num_rows($result__sql_a) ?></p>
                         </div>
                         <div class="bg-green-100 p-3 rounded-full">
                             <i class="fas fa-paw text-green-600 text-xl"></i>
@@ -83,8 +121,8 @@
                 <div class="bg-white rounded-xl shadow p-6">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500">Visites Aujourd'hui</p>
-                            <p class="text-3xl font-bold">24</p>
+                            <p class="text-gray-500">Total Visites</p>
+                            <p class="text-3xl font-bold"><?= mysqli_num_rows($result__sql_v) ?></p>
                         </div>
                         <div class="bg-purple-100 p-3 rounded-full">
                             <i class="fas fa-calendar text-purple-600 text-xl"></i>
@@ -95,8 +133,8 @@
                 <div class="bg-white rounded-xl shadow p-6">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500">Réservations</p>
-                            <p class="text-3xl font-bold">342</p>
+                            <p class="text-gray-500">Total Réservations</p>
+                            <p class="text-3xl font-bold"><?= mysqli_num_rows($result__sql_r) ?></p>
                         </div>
                         <div class="bg-yellow-100 p-3 rounded-full">
                             <i class="fas fa-ticket-alt text-yellow-600 text-xl"></i>
