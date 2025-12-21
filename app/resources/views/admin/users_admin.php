@@ -7,9 +7,20 @@ if (file_exists('../../../includes/config.php')) {
 }
 include '../../../includes/functions.php';
 
-$sql="SELECT * FROM Utilisateur";
+$sql = "SELECT * FROM Utilisateur WHERE role != 'admin'";
 
-$users=mysqli_query($con,$sql);
+if (!empty($_GET['role'])) {
+    $role = mysqli_real_escape_string($con, $_GET['role']);
+    $sql .= " AND role = '$role'";
+}
+
+if (isset($_GET['status']) && $_GET['status'] !== '') {
+    $status = (int) $_GET['status'];
+    $sql .= " AND status_utilisateure = $status";
+}
+
+$users = mysqli_query($con, $sql);
+
 
 
 ?>
@@ -68,23 +79,28 @@ $users=mysqli_query($con,$sql);
 
      
             <div class="bg-white rounded-xl shadow p-6 mb-6">
-                <div class="flex space-x-4">
-                    <select class="px-4 py-2 border rounded-lg">
-                        <option>Tous les rôles</option>
-                        <option>Visiteur</option>
-                        <option>Guide</option>
-                        <option>Admin</option>
-                    </select>
-                    <select class="px-4 py-2 border rounded-lg">
-                        <option>Tous les statuts</option>
-                        <option>Actif</option>
-                        <option>Inactif</option>
-                    </select>
-                    <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
-                        Filtrer
-                    </button>
-                </div>
-            </div>
+    <form method="GET" class="flex space-x-4">
+        
+       
+        <select name="role" class="px-4 py-2 border rounded-lg">
+            <option value="">Tous les rôles</option>
+            <option value="visitor">Visiteur</option>
+            <option value="guide">Guide</option>
+        </select>
+
+
+        <select name="status" class="px-4 py-2 border rounded-lg">
+            <option value="">Tous les statuts</option>
+            <option value="1">Actif</option>
+            <option value="0">Inactif</option>
+        </select>
+
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+            Filtrer
+        </button>
+    </form>
+</div>
+
 
        
             <div class="bg-white rounded-xl shadow overflow-hidden">
@@ -148,7 +164,7 @@ $users=mysqli_query($con,$sql);
             </button>
         </a>
     <?php else: ?>
-        <a href="toggle_status.php?id=<?= htmlspecialchars($row['id_utilisateure']) ?>&status=1">
+        <a href="toggle_status.php?id=<?= $row['id_utilisateure'] ?>&status=1">
             <button class="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 px-4">
                 Désactivé
             </button>

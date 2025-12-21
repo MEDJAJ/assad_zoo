@@ -34,7 +34,7 @@ $regexLangue = '/^(fr|ar|en)$/';
         $etat="error";
      }else{
         $sql="INSERT INTO visite_guidee(titre,date_heure,langue,capaciter_max,duree,prix,status_visiteguide,id_guide)
-        VALUES('$titre','$date_visite','$langue','$capacite','$duree','$prix','en cours','{$_SESSION['user_connecte']}')
+        VALUES('$titre','$date_visite','$langue','$capacite','$duree','$prix','Disponible','{$_SESSION['user_connecte']}')
         ";
         if(mysqli_query($con,$sql)){
             $message="Visite crée avec sucess";
@@ -207,6 +207,7 @@ $regexLangue = '/^(fr|ar|en)$/';
                 </div>
             </form>
         </div>
+
     </main>
 </body>
 </html>

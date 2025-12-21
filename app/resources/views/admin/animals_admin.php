@@ -97,7 +97,7 @@ $result = mysqli_query($con, "SELECT * FROM animaux");
         </div>
         <?php endif; ?>
 
-   
+
         <div id="modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center">
             <div class="bg-white p-6 rounded-xl w-full max-w-xl">
                 <h2 class="text-xl font-bold mb-4">Ajouter un animal</h2>

@@ -30,17 +30,33 @@ if(mysqli_num_rows($result) > 0){
     echo "Aucune donnée trouvée.";
 }
 $id_userconnecter=$_SESSION["user_connecte"];
+
 if($_SERVER["REQUEST_METHOD"]=="POST"){
     $nb_persones=trim($_POST["nb_personnes"]);
      
+       $reservation_sum = "
+    SELECT SUM(nb_personnes) AS total_personnes
+    FROM reservation
+    WHERE id_visiteguide = " . (int)$row['id_visiteguide'];
 
-     $sql="INSERT INTO reservation(nb_personnes,id_utilisateure,id_visiteguide)
+    $result_sum = mysqli_query($con, $reservation_sum);
+    $row_sum = mysqli_fetch_assoc($result_sum);
+
+    $places_reservees = $row_sum['total_personnes'] ?? 0;
+    $max=$places_reservees+$nb_persones;
+    if($max<=$row['capaciter_max']){
+ $sql="INSERT INTO reservation(nb_personnes,id_utilisateure,id_visiteguide)
      VALUES('$nb_persones','$id_userconnecter','$id_visite')
      
      ";
      if(!mysqli_query($con,$sql)){
              echo "Error de récuperation de donner ";
      }
+    }else{
+        die("cette visite complet ");
+    }
+
+    
 }
 
 
@@ -141,12 +157,14 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
                                 
                                     <input 
                                         type="number" 
+                                        min="1"
+                                        max="<?= $row['capaciter_max'] ?>"
                                         name="nb_personnes" 
                                         class="w-20 text-center px-3 py-2 border border-gray-300 rounded-lg"
                                         required
                                     >
                                     
-                                    <span class="text-gray-600">(Maximum: 12 personnes)</span>
+                                    <span class="text-gray-600">(Maximum: <?= $row["capaciter_max"] ?> personnes)</span>
                                 </div>
                             </div>
 

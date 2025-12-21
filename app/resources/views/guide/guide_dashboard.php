@@ -8,6 +8,7 @@ if (file_exists('../../../includes/config.php')) {
 }
 include '../../../includes/functions.php';
 $id= $_SESSION["user_connecte"];
+$user_name_connected=$_SESSION["name_user_connecte"];
 $sql="SELECT * FROM visite_guidee WHERE id_guide=$id ";
 
 $result=mysqli_query($con,$sql);
@@ -45,7 +46,7 @@ $reservations_result=mysqli_query($con,$reservations);
                     <a href="../visitor/visites.php" class="text-gray-600 hover:text-blue-600">Visites publiques</a>
                     <div class="flex items-center space-x-2">
                         <i class="fas fa-user-circle text-gray-400"></i>
-                        <span class="text-gray-700">Guide Ahmed</span>
+                        <span class="text-gray-700"><?= $user_name_connected ?></span>
                     </div>
                 </div>
             </div>
@@ -65,8 +66,19 @@ $reservations_result=mysqli_query($con,$reservations);
             <div class="bg-white rounded-xl shadow p-6">
                 <div class="flex items-center justify-between">
                     <div>
+                        <?php
+                            $sql_count = "SELECT * FROM visite_guidee v
+             WHERE v.status_visiteguide != 'Complet'
+       AND v.date_heure >= NOW() AND id_guide='$id'
+";
+$result_count=mysqli_query($con,$sql_count);
+if(!$result_count){
+die("Error de la récupération de nombre de visite active");
+}
+
+                        ?>
                         <p class="text-gray-500">Visites actives</p>
-                        <p class="text-3xl font-bold">8</p>
+                        <p class="text-3xl font-bold"><?=  mysqli_num_rows($result_count) ?? 0  ?></p>
                     </div>
                     <div class="bg-blue-100 p-3 rounded-full">
                         <i class="fas fa-map-marked-alt text-blue-600 text-xl"></i>

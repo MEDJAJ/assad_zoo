@@ -9,7 +9,7 @@ if (file_exists('../../../includes/config.php')) {
 $message_animal="";
 $message_visite="";
 $animals_select="SELECT * FROM animaux";
-$visite_select="SELECT * FROM visite_guidee";
+$visite_select="SELECT * FROM visite_guidee WHERE status_visiteguide='Disponible' OR status_visiteguide='Limité'";
 
 
 

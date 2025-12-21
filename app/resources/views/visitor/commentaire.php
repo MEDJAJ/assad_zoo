@@ -49,7 +49,7 @@ if(!$result_commentaire){
 }
 
 
-$sql_recupertion_commentaire="SELECT * FROM Utilisateur u INNER JOIN Commentaire c ON u.id_utilisateure=c.id_utilisateure ORDER BY c.date_commentaire DESC";
+$sql_recupertion_commentaire="SELECT * FROM Utilisateur u INNER JOIN Commentaire c ON u.id_utilisateure=c.id_utilisateure WHERE id_visiteguide='$id_visite' ORDER BY c.date_commentaire DESC";
 $result_recuperation_commentaire=mysqli_query($con,$sql_recupertion_commentaire);
 if(!$result_recuperation_commentaire){
     die("Error de la récuperation de commentaire");

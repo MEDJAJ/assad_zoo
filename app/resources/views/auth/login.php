@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if (mysqli_num_rows($result) > 0) {
             $user = mysqli_fetch_assoc($result);
-
+     
             if (password_verify($password, $user['mot_passe'])) {
                  $correct = $user['role'];
                 $etat = "success";
@@ -36,13 +36,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION["user_connecte"]=$user['id_utilisateure'];
                 $_SESSION["name_user_connecte"]=$user['nom'];
                if($correct==="visitor"){
-                header("Location: ../visitor/home.php");
+                if(intval($user['status_utilisateure'])==0){
+                    die("attentu activation de compte");
+                }else{
+  header("Location: ../visitor/home.php");
               exit;
-               }elseif($correct==="guide"){
+                }
+              
+               }elseif($correct==="guide" && intval($user['status_utilisateure'])==0){
                 $etat = "success";
-                 header("Location: ../guide/create_visite.php");
+                 header("Location: ../guide/activation_compte.php");
                  exit;
                 $message = "attentu otorisation de compte .....  ";
+               }elseif($correct==="guide" && intval($user['status_utilisateure'])==1){
+                        header("Location: ../guide/guide_dashboard.php");
+                 exit;
                }else{
                   header("Location: ../admin/admin_dashboard.php");
                       exit;

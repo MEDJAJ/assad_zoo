@@ -80,20 +80,22 @@ if(!$result__sql_r){
         </div>
 
      
-        <div class="flex-1 p-8">
+        <div class="flex-1 p-8 ">
       
             <div class="flex justify-between items-center mb-8">
                 <h1 class="text-3xl font-bold">Dashboard Admin</h1>
                 <div class="flex items-center space-x-4">
                     <span class="text-gray-700">Admin</span>
-                    <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-                        <i class="fas fa-sign-out-alt mr-2"></i>Déconnexion
-                    </button>
+                  <a href="../auth/logout.php">
+    <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+        <i class="fas fa-sign-out-alt mr-2"></i>Déconnexion
+    </button>
+</a>
                 </div>
             </div>
 
        
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 mt-32">
                 <div class="bg-white rounded-xl shadow p-6">
                     <div class="flex items-center justify-between">
                         <div>
@@ -144,43 +146,9 @@ if(!$result__sql_r){
             </div>
 
            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h2 class="text-xl font-bold mb-4">Activité récente</h2>
-                    <div class="space-y-4">
-                        <div class="flex items-center space-x-3">
-                            <div class="bg-green-100 p-2 rounded-full">
-                                <i class="fas fa-user-plus text-green-600"></i>
-                            </div>
-                            <div>
-                                <p>Nouveau guide inscrit</p>
-                                <p class="text-sm text-gray-500">Il y a 2 heures</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <div class="bg-blue-100 p-2 rounded-full">
-                                <i class="fas fa-paw text-blue-600"></i>
-                            </div>
-                            <div>
-                                <p>Nouvel animal ajouté</p>
-                                <p class="text-sm text-gray-500">Il y a 5 heures</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          
 
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h2 class="text-xl font-bold mb-4">Guides en attente</h2>
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center p-3 bg-yellow-50 rounded-lg">
-                            <span>Ahmed Benali</span>
-                            <div class="space-x-2">
-                                <button class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">Accepter</button>
-                                <button class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Refuser</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
