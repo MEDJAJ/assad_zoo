@@ -34,8 +34,7 @@ $id_userconnecter=$_SESSION["user_connecte"];
 if($_SERVER["REQUEST_METHOD"]=="POST"){
     $nb_persones=trim($_POST["nb_personnes"]);
      
-       $reservation_sum = "
-    SELECT SUM(nb_personnes) AS total_personnes
+       $reservation_sum = " SELECT SUM(nb_personnes) AS total_personnes
     FROM reservation
     WHERE id_visiteguide = " . (int)$row['id_visiteguide'];
 

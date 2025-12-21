@@ -32,10 +32,10 @@
 
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display">
 
-<!-- PAGE WRAPPER -->
+
 <main class="w-full max-w-6xl mx-auto">
 
-  <!-- HERO -->
+
   <section class="relative h-[70vh] md:h-[80vh] w-full">
     <div class="absolute inset-0 bg-cover bg-center"
       style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuDKOXV2jLcy2VqNPhCv1PViTtuPy0R8p4gH3hlrhZ5Eiji5_2dQUFQ4DdWWDBuzUgZ7rBT_tPgwBV2FlbwGmN8De1y2kTtHjum28PXxWbZdzH5eB50NvMmwoSPiPSa62u7OcEagod5cNvCmWBjFxcbhxaBvmRYdKttAXQ03jXZOfIhfdqzDsTfvstROLQO4jEowzrb8xMh4mxq-iyEtxBC4rLsN_x-FmkQOwya_KH5Inj-P8m6sv8u8HQrHAZz207Njh3-S2wKU6gE');">
@@ -54,10 +54,10 @@
     </div>
   </section>
 
-  <!-- CONTENT -->
+
   <section class="relative -mt-12 bg-background-light dark:bg-background-dark rounded-t-3xl px-6 md:px-12 py-12 space-y-12">
 
-    <!-- STATS -->
+  
     <div class="grid grid-cols-3 md:grid-cols-6 gap-4">
       <div class="col-span-1 md:col-span-2 text-center p-4 rounded-xl bg-black/5 dark:bg-white/5">
         <p class="text-xs uppercase opacity-60">Age</p>
@@ -73,7 +73,7 @@
       </div>
     </div>
 
-    <!-- BIO -->
+
     <div class="max-w-3xl">
       <h2 class="text-3xl font-bold mb-4">The King in Exile</h2>
       <p class="text-slate-600 dark:text-gray-300 mb-4">
@@ -84,14 +84,14 @@
       </p>
     </div>
 
-    <!-- IMAGE BREAK -->
+  
     <div class="w-full h-72 md:h-96 rounded-2xl overflow-hidden">
       <div class="w-full h-full bg-cover bg-center hover:scale-105 transition-transform duration-700"
         style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuDcgXfM7HfC1vZQwf5oqsc9XZaU0EeOUKG7F1o_3i3o4BaSFthx4uBn-4pZRx_WKmzR_4lKt55iRgSMbGEO3Jls4uynWIvKT-Jki34YheQ78Q4Cn-_asfq0_12q-I9p--bCaaqpeKTBv2ipIfxb8n57AtIXKdXGP3ScydxxuBwyxqJ_SfmDMVoG2wz3aUY5kHAee3hap912JIMn8nQF1CrLLubZ30FrmzhXnqFrG2BJDGY4ppS8YWTsNKTcXOo7CbUcEaFoxCb4lHI');">
       </div>
     </div>
 
-    <!-- HABITS -->
+ 
     <div class="grid md:grid-cols-2 gap-6">
       <div class="p-6 rounded-xl bg-white dark:bg-white/5 border">
         <h3 class="font-bold mb-2">Carnivorous Diet</h3>
@@ -107,7 +107,7 @@
       </div>
     </div>
 
-    <!-- GALLERY -->
+
     <div>
       <h3 class="text-2xl font-bold mb-4">Gallery</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">

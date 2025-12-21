@@ -1,3 +1,62 @@
+
+<?php
+if (file_exists('../../../includes/config.php')) {
+    include '../../../includes/config.php';
+} else {
+    echo 'Fichier config.php introuvable';
+}
+
+$requéte_sql_u="SELECT * FROM utilisateur";
+$requéte_sql_a="SELECT * FROM animaux";
+$requéte_sql_visiteurs="SELECT * FROM utilisateur  WHERE role='visitor'";
+$requéte_sql_r="SELECT * FROM reservation";
+$requéte_sql_g="SELECT * FROM utilisateur  WHERE role='guide'";
+
+$result__sql_u=mysqli_query($con,$requéte_sql_u);
+$result__sql_a=mysqli_query($con,$requéte_sql_a);
+$result__sql_v=mysqli_query($con,$requéte_sql_visiteurs);
+$result__sql_r=mysqli_query($con,$requéte_sql_r);
+$result__sql_g=mysqli_query($con,$requéte_sql_g);
+
+if(!$result__sql_u){
+    die("Error de la récuperation utilsateures");
+}
+if(!$result__sql_a){
+    die("Error de la récuperation animaux");
+}
+if(!$result__sql_v){
+    die("Error de la récuperation visiteurs");
+}
+if(!$result__sql_r){
+    die("Error de la récuperation reservation");
+}
+if(!$result__sql_g){
+    die("Error de la récuperation de toutes les quides de app");
+}
+
+$requéte_prende_top_reservation="SELECT 
+    v.titre,
+    g.nom AS nom_guide,
+    v.id_visiteguide AS id_visite,
+    COUNT(r.id_reservation) AS total_reservations
+FROM visite_guidee v
+INNER JOIN utilisateur g ON v.id_guide = g.id_utilisateure
+LEFT JOIN reservation r ON v.id_visiteguide = r.id_visiteguide
+GROUP BY v.id_visiteguide, v.titre, g.nom
+ORDER BY total_reservations DESC
+LIMIT 1";
+
+$result_prende_top_reservation=mysqli_query($con,$requéte_prende_top_reservation);
+if(!$result_prende_top_reservation){
+    die("Error de la récupération de donner");
+}
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,7 +69,7 @@
 </head>
 <body class="bg-gray-100">
     <div class="flex">
-        <!-- Sidebar -->
+        
         <div class="w-64 bg-gray-900 text-white min-h-screen">
             <div class="p-6">
                 <div class="flex items-center space-x-3 mb-8">
@@ -51,12 +110,12 @@
             </div>
 
          
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 <div class="bg-white rounded-xl shadow p-6">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-gray-500">Utilisateurs Total</p>
-                            <p class="text-3xl font-bold">1,248</p>
+                            <p class="text-3xl font-bold"><?= mysqli_num_rows($result__sql_u) ?></p>
                         </div>
                         <i class="fas fa-users text-3xl text-blue-500"></i>
                     </div>
@@ -66,7 +125,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-gray-500">Animaux Total</p>
-                            <p class="text-3xl font-bold">156</p>
+                            <p class="text-3xl font-bold"><?= mysqli_num_rows($result__sql_a) ?></p>
                         </div>
                         <i class="fas fa-paw text-3xl text-green-500"></i>
                     </div>
@@ -76,7 +135,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-gray-500">Réservations</p>
-                            <p class="text-3xl font-bold">342</p>
+                            <p class="text-3xl font-bold"><?= mysqli_num_rows($result__sql_r) ?></p>
                         </div>
                         <i class="fas fa-ticket-alt text-3xl text-purple-500"></i>
                     </div>
@@ -85,8 +144,19 @@
                 <div class="bg-white rounded-xl shadow p-6">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-500">Revenus Total</p>
-                            <p class="text-3xl font-bold">45,800 MAD</p>
+                            <p class="text-gray-500">Visiteurs Totale</p>
+                            <p class="text-3xl font-bold"><?= mysqli_num_rows($result__sql_v) ?></p>
+                        </div>
+                        <i class="fas fa-money-bill-wave text-3xl text-yellow-500"></i>
+                    </div>
+                </div>
+
+
+                   <div class="bg-white rounded-xl shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500">Guides Totale</p>
+                            <p class="text-3xl font-bold"><?= mysqli_num_rows($result__sql_g) ?></p>
                         </div>
                         <i class="fas fa-money-bill-wave text-3xl text-yellow-500"></i>
                     </div>
@@ -94,26 +164,11 @@
             </div>
 
         
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h2 class="text-xl font-bold mb-6">Utilisateurs par rôle</h2>
-                    <div class="h-64">
-                        <canvas id="roleChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h2 class="text-xl font-bold mb-6">Réservations par mois</h2>
-                    <div class="h-64">
-                        <canvas id="reservationsChart"></canvas>
-                    </div>
-                </div>
-            </div>
+          
 
            
             <div class="bg-white rounded-xl shadow p-6">
-                <h2 class="text-xl font-bold mb-6">Top 5 des visites les plus réservées</h2>
+                <h2 class="text-xl font-bold mb-6">Top des visite les plus réservées</h2>
                 <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead class="bg-gray-100">
@@ -122,37 +177,32 @@
                                 <th class="p-4 text-left">Guide</th>
                                 <th class="p-4 text-left">Réservations</th>
                                 <th class="p-4 text-left">Note moyenne</th>
-                                <th class="p-4 text-left">Revenus</th>
+                              
                             </tr>
                         </thead>
                         <tbody>
+                            <?php
+                        if(mysqli_num_rows($result_prende_top_reservation)>0){
+                            $row=mysqli_fetch_assoc($result_prende_top_reservation);
+                            $query_note="SELECT MAX(c.note) AS note_moyenne FROM visite_guidee v INNER JOIN commentaire c ON c.id_visiteguide=v.id_visiteguide WHERE v.id_visiteguide=".$row['id_visite'];
+                            $result_max_note=mysqli_query($con,$query_note);
+                            if(!$result_max_note){
+                                die("Error de la récupération de max note");
+                            }
+                            $row_max=mysqli_fetch_assoc($result_max_note);
+                            ?>
                             <tr class="border-t hover:bg-gray-50">
-                                <td class="p-4">Safari matinal</td>
-                                <td class="p-4">Ahmed</td>
-                                <td class="p-4">85</td>
+                                <td class="p-4 text-yellow-500 font-bold"><?= $row['titre'] ?></td>
+                                <td class="p-4 text-yellow-500 font-bold"><?= $row['nom_guide'] ?></td>
+                                <td class="p-4 text-yellow-500 font-bold"><?= $row['total_reservations'] ?></td>
                                 <td class="p-4">
-                                    <span class="text-yellow-500">★★★★☆</span> 4.5
+                                    <span class="text-yellow-500 font-bold"> <?= $row_max['note_moyenne'] ?></span>
                                 </td>
-                                <td class="p-4">12,750 MAD</td>
+
                             </tr>
-                            <tr class="border-t hover:bg-gray-50">
-                                <td class="p-4">Aventure nocturne</td>
-                                <td class="p-4">Karim</td>
-                                <td class="p-4">72</td>
-                                <td class="p-4">
-                                    <span class="text-yellow-500">★★★★★</span> 5.0
-                                </td>
-                                <td class="p-4">12,960 MAD</td>
-                            </tr>
-                            <tr class="border-t hover:bg-gray-50">
-                                <td class="p-4">Découverte félins</td>
-                                <td class="p-4">Fatima</td>
-                                <td class="p-4">68</td>
-                                <td class="p-4">
-                                    <span class="text-yellow-500">★★★★☆</span> 4.3
-                                </td>
-                                <td class="p-4">8,160 MAD</td>
-                            </tr>
+                            <?php
+                             } ?>
+                         
                         </tbody>
                     </table>
                 </div>
@@ -160,33 +210,6 @@
         </div>
     </div>
 
-    <script>
-        // Graphique 1: Utilisateurs par rôle
-        const roleCtx = document.getElementById('roleChart').getContext('2d');
-        new Chart(roleCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Visiteurs', 'Guides', 'Admins'],
-                datasets: [{
-                    data: [1150, 95, 3],
-                    backgroundColor: ['#3b82f6', '#10b981', '#ef4444']
-                }]
-            }
-        });
-
-        // Graphique 2: Réservations par mois
-        const resCtx = document.getElementById('reservationsChart').getContext('2d');
-        new Chart(resCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
-                datasets: [{
-                    label: 'Réservations',
-                    data: [45, 52, 68, 85, 72, 63],
-                    backgroundColor: '#8b5cf6'
-                }]
-            }
-        });
-    </script>
+  
 </body>
 </html>
